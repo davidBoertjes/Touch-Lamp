@@ -15,13 +15,15 @@ The smart lamp features capacitive touch pad control for brightness adjustment a
 
 ```
 Touch Lamp/
-├── README.md                           # This file - project overview
-├── touch_lamp.yaml                     # Original configuration (direct AC dimmer)
-├── touch_lamp_description.md           # Original config documentation
-├── touch_lamp_dimmerlink.yaml          # New configuration (DimmerLink UART)
-├── touch_lamp_dimmerlink_README.md     # DimmerLink config documentation
-├── docs_dimmerlink-overview_RBDIMMER.html  # DimmerLink hardware documentation
-└── docs_dimmerlink-overview_RBDIMMER_files/ # DimmerLink docs assets
+├── README.md                                      # This file - project overview
+├── touch_lamp.yaml                               # Original configuration (direct AC dimmer)
+├── touch_lamp_description.md                     # Original config documentation
+├── touch_lamp_dimmerlink.yaml                    # New configuration (DimmerLink UART)
+├── touch_lamp_dimmerlink_README.md               # DimmerLink config documentation
+├── touch_lamp_calibration_helper.yaml            # Touch pad calibration helper (temporary)
+├── CALIBRATION_HELPER_README.md                  # Calibration guide and instructions
+├── docs_dimmerlink-overview_RBDIMMER.html        # DimmerLink hardware documentation
+└── docs_dimmerlink-overview_RBDIMMER_files/       # DimmerLink docs assets
 ```
 
 ## Hardware Requirements
@@ -130,12 +132,52 @@ esphome run esphome_config.yaml
 3. Complete the pairing process
 4. New entities will appear in Home Assistant
 
+## Touch Pad Calibration
+
+The touch pad sensitivity is controlled by the `threshold` parameter. Finding the optimal threshold is critical for reliable operation.
+
+### Quick Calibration Guide
+
+To determine the best threshold value for your specific hardware setup:
+
+1. **Flash the calibration helper**:
+   ```bash
+   esphome run touch_lamp_calibration_helper.yaml
+   ```
+
+2. **Follow the guided calibration process**:
+   - Phase 1: Keep pad clear to establish baseline (no-touch maximum)
+   - Phase 2: Repeatedly touch the pad to capture touch range (touch minimum)
+   - System automatically calculates optimal threshold
+
+3. **Apply the result**:
+   - Note the "Recommended Threshold" value
+   - Update `threshold:` in your main configuration
+   - Flash your production config with the new value
+
+For detailed instructions, see [CALIBRATION_HELPER_README.md](CALIBRATION_HELPER_README.md).
+
+### Understanding Thresholds
+
+- **Current default**: `550000` - Works for typical ESP32 boards
+- **Higher values** (e.g., 600000): Requires stronger touches to register
+- **Lower values** (e.g., 500000): More sensitive, but risk of false positives
+
+Your optimal threshold depends on:
+- ESP32 board variant
+- Touch pad size and material
+- Wiring length and routing
+- Surrounding components and shielding
+- Environmental humidity
+
+Running the calibration helper ensures a threshold perfectly tuned for your unique hardware.
+
 ## Features
 
 ### Touch Control
 - **Single touch**: Cycles through brightness levels (0% → 25% → 50% → 75% → 100% → 0%)
 - **Debouncing**: 10ms on/off filters prevent accidental triggering
-- **Threshold**: 550,000 (configurable for sensitivity adjustment)
+- **Threshold**: Configurable per hardware (see Calibration section above)
 
 ### Brightness Levels
 - **Off**: 0%
