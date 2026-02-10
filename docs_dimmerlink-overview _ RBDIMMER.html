@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://www.rbdimmer.com/docs/dimmerlink-overview -->
+<html lang="en-US" data-website-id="2" data-main-object="website.page(125,)" data-add2cart-redirect="2" data-country="CA" data-logged="false"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Odoo">
+            
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="docs/dimmerlink-overview | RBDIMMER">
+        <meta property="og:site_name" content="RBDIMMER">
+        <meta property="og:url" content="https://www.rbdimmer.com/docs/dimmerlink-overview">
+        <meta property="og:image" content="https://www.rbdimmer.com/web/image/website/2/logo?unique=e671185">
+            
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="docs/dimmerlink-overview | RBDIMMER">
+        <meta name="twitter:image" content="https://www.rbdimmer.com/web/image/website/2/logo/300x300?unique=e671185">
+        
+        <link rel="canonical" href="https://www.rbdimmer.com/docs/dimmerlink-overview">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+        <title>docs/dimmerlink-overview | RBDIMMER</title>
+        <link type="image/x-icon" rel="shortcut icon" href="https://www.rbdimmer.com/web/image/website/2/favicon?unique=e671185">
+        <link rel="preload" href="https://www.rbdimmer.com/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin="">
+        <link type="text/css" rel="stylesheet" href="./docs_dimmerlink-overview _ RBDIMMER_files/web.assets_frontend.min.css">
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "78429739a544827cbf351edd8706278566f11295o1802267325",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": null, "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"6": {"symbol": "\u00a5", "position": "before", "digits": [69, 2]}, "125": {"symbol": "\u20ac", "position": "after", "digits": [69, 2]}, "24": {"symbol": "$", "position": "before", "digits": [69, 2]}, "1": {"symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 2}, "test_mode": false, "websocket_worker_version": "18.0-7", "translationURL": "/website/translations", "cache_hashes": {"translations": "f2bc1fd4aa9d6c665644b0666fb2bf051fb16dfd"}, "geoip_country_code": "CA", "geoip_phone_code": 1, "lang_url_code": "en", "turnstile_site_key": "0x4AAAAAABDfQ7BYMMb7M31y"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+            }
+        </script>
+        <script type="text/javascript" defer="defer" src="./docs_dimmerlink-overview _ RBDIMMER_files/web.assets_frontend_minimal.min.js.download" onerror="__odooAssetError=1"></script>
+        <script type="text/javascript" defer="defer" onerror="__odooAssetError=1" src="./docs_dimmerlink-overview _ RBDIMMER_files/web.assets_frontend_lazy.min.js.download"></script>
+        
+        <link href="./docs_dimmerlink-overview _ RBDIMMER_files/prism-tomorrow.min.css" rel="stylesheet">
+<script src="./docs_dimmerlink-overview _ RBDIMMER_files/prism.min.js.download"></script>
+<script src="./docs_dimmerlink-overview _ RBDIMMER_files/prism-autoloader.min.js.download"></script>
+<script>
+  document.addEventListener('DOMContentLoaded',
+  function() {
+      Prism.highlightAll();
+  });
+</script>
+<style>
+body { font-size: 15px !important; }
+h1, .h1 { font-size: 36px !important; }
+h2, .h2 { font-size: 28px !important; }
+h3, .h3 { font-size: 22px !important; }
+h4, .h4 { font-size: 18px !important; }
+h5, .h5 { font-size: 16px !important; }
+h6, .h6 { font-size: 14px !important; }
+
+@media (max-width: 768px) {
+    body { font-size: 14px !important; }
+    h1 { font-size: 28px !important; }
+    h2 { font-size: 22px !important; }
+    h3 { font-size: 18px !important; }
+}
+code.inline {
+    font-size: 87.5%;
+    color: #e83e8c;
+    background-color: #fce4ec;
+    border: 1px solid #f8bbd0;
+    border-radius: 4px;
+    padding: 2px 6px;
+    word-wrap: break-word;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+
+    a > & {
+        color: inherit;
+    }
+}
+
+  /* Ограничение высоты блоков кода */
+  pre {
+      max-height: 600px;
+      overflow-y: auto;
+      overflow-x: auto;
+  }
+
+  pre::-webkit-scrollbar {
+      width: 8px;
+  }
+
+  pre::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+  }
+
+  pre::-webkit-scrollbar-thumb {
+      background: rgba(50, 50, 50, 1);
+      border-radius: 4px;
+  }
+
+  code.inline {
+      background-color: rgba(110, 118, 129, 0.2);       
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 85%;
+  }
+</style>
+
+    <style id="conditional_visibility"></style><script type="text/javascript" async="" src="./docs_dimmerlink-overview _ RBDIMMER_files/f.txt"></script><script type="module" src="./docs_dimmerlink-overview _ RBDIMMER_files/firebase.js.download"></script></head>
+    <body class="">
+
+
+
+        <div id="wrapwrap" class="   ">
+            <a class="o_skip_to_content btn btn-primary rounded-0 visually-hidden-focusable position-absolute start-0" href="https://www.rbdimmer.com/docs/dimmerlink-overview#wrap">Skip to Content</a>
+                <header id="top" data-anchor="true" data-name="Header" data-extra-items-toggle-aria-label="Extra items button" class="o_header_fixed o_top_fixed_element" style=" ">
+                    
+    <nav data-name="Navbar" aria-label="Main" class="navbar navbar-expand-lg navbar-light o_colored_level o_cc d-none d-lg-block shadow-sm ">
+        
+
+            <div id="o_main_nav" class="o_main_nav container">
+                
+    <a data-name="Navbar Logo" href="https://www.rbdimmer.com/" class="navbar-brand logo me-4">
+            
+            <span role="img" aria-label="Logo of RBDIMMER" title="RBDIMMER"><img src="./docs_dimmerlink-overview _ RBDIMMER_files/RBDIMMER.png" class="img img-fluid" width="95" height="40" alt="RBDIMMER" loading="lazy" style=""></span>
+        </a>
+    
+                
+    <ul role="menu" id="top_menu" class="nav navbar-nav top_menu me-auto">
+        
+
+                    
+    <li role="presentation" class="nav-item">
+        <a role="menuitem" href="https://www.rbdimmer.com/" class="nav-link ">
+            <span>Home</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item">
+        <a role="menuitem" href="https://www.rbdimmer.com/dimmers-pricing" class="nav-link ">
+            <span>Shop</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item dropdown position-static">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle o_mega_menu_toggle active" data-bs-display="static">
+            <span>AC Dimmers</span>
+        </a>
+            <div data-name="Mega Menu" role="menuitem" class="dropdown-menu o_mega_menu ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="s_mega_menu_odoo_menu pt16 o_colored_level o_cc o_cc4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-3 pt16 pb24 o_colored_level">
+                    <h4 class="text-uppercase h5 fw-bold mt-0">AC Dimmers</h4>
+                    <div class="s_hr pt4 pb16 o_colored_level" data-name="Separator">
+                        <hr class="w-100 mx-auto" style="border-top-width: 2px; border-top-color: var(--secondary);">
+                    </div>
+                    <nav class="nav flex-column"><span class="s_badge badge text-bg-secondary o_animable o_default_snippet_text" data-name="Badge" data-vxml="001" data-snippet="s_badge">
+        <i class="fa fa-fw fa-folder o_not-animable"></i>Category
+    </span><img src="./docs_dimmerlink-overview _ RBDIMMER_files/DimLink_pic_1000x1000.jpeg" alt="" class="img img-fluid o_we_custom_image" loading="lazy" data-lazy-loading-initial-min-height="" style="min-height: 1px;"><img src="./docs_dimmerlink-overview _ RBDIMMER_files/Dimmer-work-OFF-ONphase.png" alt="" class="img img-fluid o_we_custom_image" loading="lazy" data-lazy-loading-initial-min-height="" style="min-height: 1px;"><img src="./docs_dimmerlink-overview _ RBDIMMER_files/DimLink_pic_1000x1000.jpeg" alt="" class="img img-fluid o_we_custom_image" loading="lazy" data-lazy-loading-initial-min-height="" style="min-height: 1px;"><img src="./docs_dimmerlink-overview _ RBDIMMER_files/Dimmer-work-OFF-ONphase.png" alt="" class="img img-fluid o_we_custom_image" loading="lazy" data-lazy-loading-initial-min-height="" style="min-height: 1px;"><img src="./docs_dimmerlink-overview _ RBDIMMER_files/Blog Post &#39;AC Dimmer Based on Zero-Cross Detector and TRIAC_ Operating Principles and Applications&#39; cover image.webp" alt="" class="img img-fluid o_we_custom_image" loading="lazy" data-lazy-loading-initial-min-height="" style="min-height: 1px;">
+                        <a href="https://www.rbdimmer.com/dimmers-pricing" class="nav-link px-0" data-name="Menu Item">Catalog</a>
+                        <a href="https://www.rbdimmer.com/docs/dimmers-guide" class="nav-link px-0" data-name="Menu Item">Documentation</a>
+                        <a href="https://www.rbdimmer.com/blog/dimmers-projects-5" class="nav-link px-0" data-name="Menu Item">Dimmers Projects</a>
+                        <a href="https://www.rbdimmer.com/news" class="nav-link px-0" data-name="Menu Item">News</a>
+                        
+                        
+                    </nav>
+                </div>
+                <div class="col-12 col-lg-3 pt16 pb24 o_colored_level">
+                    <h4 class="text-uppercase h5 fw-bold mt-0">DimmerLink - UART/I2C</h4>
+                    <div class="s_hr pt4 pb16 o_colored_level" data-name="Separator">
+                        <hr class="w-100 mx-auto" style="border-top-width: 2px; border-top-color: var(--secondary);">
+                    </div>
+                    <nav class="nav flex-column">
+                        <a href="https://www.rbdimmer.com/docs/dimmerlink-overview" class="nav-link px-0" data-name="Menu Item">Overview</a>
+                        <a href="https://www.rbdimmer.com/docs/dimmerlink-QuickStart" class="nav-link px-0" data-name="Menu Item">Quick Start</a>
+                        <a href="https://www.rbdimmer.com/docs/dimmerlink-hardwareconnection" class="nav-link px-0" data-name="Menu Item">Hardware Connection</a><a href="https://www.rbdimmer.com/docs/dimmerlink-uartcommunication" class="nav-link px-0" data-name="Menu Item">UART Communication</a><a href="https://www.rbdimmer.com/docs/dimmerlink-i2ccommunication" class="nav-link px-0" data-name="Menu Item">I2C Communication</a><a href="https://www.rbdimmer.com/docs/dimmerlink-singleboardcomputers" class="nav-link px-0" data-name="Menu Item">Single Board Computers</a><a href="https://www.rbdimmer.com/docs/dimmerlink-advancedusage" class="nav-link px-0" data-name="Menu Item">Advanced Usage</a><a href="https://www.rbdimmer.com/docs/dimmerlink-faqtroubleshooting" class="nav-link px-0" data-name="Menu Item">FAQ &amp; Troubleshooting</a>
+                    </nav>
+                </div><div class="col-12 col-lg-3 pt16 pb24 o_colored_level">
+                    <h4 class="text-uppercase h5 fw-bold mt-0">DimmerLink - esphOME (hOME aSSISTANT)</h4>
+                    <div class="s_hr pt4 pb16 o_colored_level" data-name="Separator">
+                        <hr class="w-100 mx-auto" style="border-top-width: 2px; border-top-color: var(--secondary);">
+                    </div>
+                    <nav class="nav flex-column">
+                        <a href="https://www.rbdimmer.com/docs/dimmerlink-esphome" class="nav-link px-0" data-name="Menu Item">ESPHome Integration</a>
+                        <a href="https://www.rbdimmer.com/docs/dimmerlink-esphome/component" class="nav-link px-0" data-name="Menu Item" aria-describedby="popover973352">ESPHome External
+
+Component</a>
+                        <a href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-integration" class="nav-link px-0" data-name="Menu Item">ESPHome Lambda Integration:</a><a href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-overview" class="nav-link px-0" data-name="Menu Item">   - Lambda Overview</a><a href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-reference" class="nav-link px-0" data-name="Menu Item" aria-describedby="popover344280"> - Lambda Reference</a><a href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-entities" class="nav-link px-0" data-name="Menu Item"> - Lambda Entities</a><a href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-examples" class="nav-link px-0" data-name="Menu Item"> - Lambda Examples</a><a href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-troubleshooting" class="nav-link px-0" data-name="Menu Item"> - Lambda FAQ &amp; Troubleshooting</a>
+                    </nav>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+    </section></div>
+    </li>
+    <li role="presentation" class="nav-item dropdown position-static">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle o_mega_menu_toggle  " data-bs-display="static">
+            <span>Solutions</span>
+        </a>
+            <div data-name="Mega Menu" role="menuitem" class="dropdown-menu o_mega_menu ">
+    
+
+
+
+
+
+
+
+
+
+<section class="s_mega_menu_odoo_menu pt16 o_colored_level pb24 o_cc o_cc2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 pt16 o_colored_level col-lg-3 pb8">
+                    <h4 class="text-uppercase h5 fw-bold mt-0">ACrouter</h4>
+                    <div class="s_hr pt4 pb16 o_colored_level" data-name="Separator">
+                        <hr class="w-100 mx-auto" style="border-top-width: 2px; border-top-color: var(--primary);">
+                    </div>
+                    <nav class="nav flex-column">
+                        <a href="https://www.rbdimmer.com/acrouter-what-is" class="nav-link px-0" data-name="Menu Item">What is ACRouter?</a>
+                        <a href="https://www.rbdimmer.com/acrouter-overview" class="nav-link px-0" data-name="Menu Item">Overview</a>
+                        <a href="https://www.rbdimmer.com/acrouter-hardware-guide" class="nav-link px-0" data-name="Menu Item">Hardware Guide</a>
+                        <a href="https://www.rbdimmer.com/acrouter-application-compilation" class="nav-link px-0" data-name="Menu Item">Compilation</a>
+                        <a href="https://www.rbdimmer.com/acrouter-application-structure" class="nav-link px-0" data-name="Menu Item">Application Structure</a>
+                        <a href="https://www.rbdimmer.com/acrouter-operating-Modes" class="nav-link px-0" data-name="Menu Item">Router Modes
+                    </a></nav>
+                </div><div class="col-12 pt16 o_colored_level col-lg-3 pb16">
+                    <h4 class="text-uppercase h5 fw-bold mt-0"><br></h4>
+                    
+                    <nav class="nav flex-column"><a href="https://www.rbdimmer.com/acrouter-api-reference" class="nav-link px-0" data-name="Menu Item">API Reference</a><a href="https://www.rbdimmer.com/acrouter-main-application" class="nav-link px-0" data-name="Menu Item">Main Application</a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://www.rbdimmer.com/acrouter-web-api-get" class="nav-link px-0" data-name="Menu Item">Web API - GET</a><a href="https://www.rbdimmer.com/acrouter-web-api-post" class="nav-link px-0" data-name="Menu Item">Web API - POST</a><a href="https://www.rbdimmer.com/acrouter-sensor-calibration" class="nav-link px-0" data-name="Menu Item">Sensor Calibration</a><a href="https://www.rbdimmer.com/acrouer-mqtt-guide" class="nav-link px-0" data-name="Menu Item">MQTT Guide</a><a href="https://www.rbdimmer.com/acrouter-home-assistant-integration" class="nav-link px-0" data-name="Menu Item">Home Assistant Integration</a><br>
+                    </nav>
+                </div><div class="col-12 pt16 o_colored_level col-lg-6 pb16">
+                    <h4 class="text-uppercase h5 fw-bold mt-0"><br></h4>
+                    <img src="./docs_dimmerlink-overview _ RBDIMMER_files/ACRouter-controller-full-1920x.jpg" alt="" class="img img-fluid o_we_custom_image rounded" data-mimetype="image/jpeg" data-original-id="5096" data-original-src="/web/image/5096-d5c94ecc/ACRouter-controller-full-1920x.jpg" data-mimetype-before-conversion="image/jpeg" loading="lazy" data-lazy-loading-initial-min-height="" style="min-height: 1px;">
+                    <nav class="nav flex-column">
+                        
+                        
+                        
+                        
+                        
+                        <br>
+                    </nav>
+                </div>
+                
+                
+                <div class="col-12 col-lg-3 pt16 pb24 o_colored_level">
+                    <h4 class="text-uppercase h5 fw-bold mt-0"><br></h4>
+                </div>
+            </div>
+        </div>
+        
+    </section></div>
+    </li>
+    <li role="presentation" class="nav-item">
+        <a role="menuitem" href="https://www.rbdimmer.com/diy-insights" class="nav-link ">
+            <span>DIY Insights</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item dropdown ">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle   ">
+            <span>Documentation</span>
+        </a><ul role="menu" class="dropdown-menu ">
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/dimmers-guide" class="dropdown-item ">
+            <span>Dimmers Guide</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/selecting-dimmer" class="dropdown-item ">
+            <span>Selecting Dimmer</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/hardware-connection" class="dropdown-item ">
+            <span>Hardware Connection</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/universal-library-for-esp32" class="dropdown-item ">
+            <span>Universal library for ESP32</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/dimmers-universal-library-for-esp32-arduino-guide-and-examples" class="dropdown-item ">
+            <span>- Arduino guide and examples</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/dimmers-universal-library-for-esp32-esp-idf-fraimwork-c-guide-and-examples" class="dropdown-item ">
+            <span>- ESP-IDF fraimwork C guide and examples.</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li role="presentation" class="nav-item dropdown ">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle   ">
+            <span>Help</span>
+        </a><ul role="menu" class="dropdown-menu ">
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/contactus" class="dropdown-item ">
+            <span>Contact us</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/customer-support" class="dropdown-item ">
+            <span>Customer Support</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/order-chang-and-cancel" class="dropdown-item ">
+            <span>Changing / Canceling order</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/refund-and-returns" class="dropdown-item ">
+            <span>Order return &amp; refund</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/lost-shipments" class="dropdown-item ">
+            <span>Lost shipment</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/privacy-policy" class="dropdown-item ">
+            <span>Privacy Policy</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/terms-and-conditions" class="dropdown-item ">
+            <span>Terms and Conditions</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+                
+    </ul>
+                
+                <ul class="navbar-nav align-items-center gap-2 flex-shrink-0 justify-content-end ps-3">
+                    
+        
+            <li class=" divider d-none"></li> 
+            <li class="o_wsale_my_cart  ">
+                <a href="https://www.rbdimmer.com/shop/cart" aria-label="eCommerce cart" class="o_navlink_background btn position-relative rounded-circle p-1 text-center text-reset">
+                    <div class="">
+                        <i class="fa fa-shopping-cart fa-stack"></i>
+                        <sup class="my_cart_quantity badge bg-primary position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill d-none" data-order-id="">0</sup>
+                    </div>
+                </a>
+            </li>
+        
+        
+            <li class="o_wsale_my_wish d-none  o_wsale_my_wish_hide_empty">
+                <a href="https://www.rbdimmer.com/shop/wishlist" class="o_navlink_background btn position-relative rounded-circle p-1 text-center text-reset">
+                    <div class="">
+                        <i class="fa fa-1x fa-heart fa-stack"></i>
+                        <sup class="my_wish_quantity o_animate_blink badge bg-primary position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill">0</sup>
+                    </div>
+                </a>
+            </li>
+        
+                    
+        <li class="">
+                
+                <a data-bs-target="#o_search_modal" data-bs-toggle="modal" role="button" title="Search" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" class="btn rounded-circle p-1 lh-1 o_navlink_background text-reset o_not_editable">
+                    <i class="oi oi-search fa-stack lh-lg"></i>
+                </a>
+        </li>
+                    
+        <li class="">
+                <div data-name="Text" class="s_text_block ">
+                    
+                </div>
+        </li>
+                    
+                    
+        <li data-name="Language Selector" class="o_header_language_selector ">
+        
+            <div class="js_language_selector  dropdown d-print-none">
+                <button type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="border-0 dropdown-toggle nav-link">
+                    <span class="">English (US)</span>
+                </button>
+                <div role="menu" class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item js_change_lang active" role="menuitem" href="https://www.rbdimmer.com/docs/dimmerlink-overview" data-url_code="en" title="English (US)">
+                            <span class="">English (US)</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/fr/docs/dimmerlink-overview" data-url_code="fr" title=" Français">
+                            <span class=""> Français</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/de/docs/dimmerlink-overview" data-url_code="de" title=" Deutsch">
+                            <span class=""> Deutsch</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/it/docs/dimmerlink-overview" data-url_code="it" title=" Italiano">
+                            <span class=""> Italiano</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/ru/docs/dimmerlink-overview" data-url_code="ru" title=" русский язык">
+                            <span class=""> русский язык</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/es/docs/dimmerlink-overview" data-url_code="es" title=" Español">
+                            <span class=""> Español</span>
+                        </a>
+                </div>
+            </div>
+        
+        </li>
+                    
+            <li class=" o_no_autohide_item">
+                <a href="https://www.rbdimmer.com/web/login" class="o_nav_link_btn nav-link border px-3">Sign in</a>
+            </li>
+                    
+        
+        
+                    
+                </ul>
+            </div>
+        
+    </nav>
+    <nav data-name="Navbar" aria-label="Mobile" class="navbar  navbar-light o_colored_level o_cc o_header_mobile d-block d-lg-none shadow-sm ">
+        
+
+        <div class="o_main_nav container flex-wrap justify-content-between">
+            
+    <a data-name="Navbar Logo" href="https://www.rbdimmer.com/" class="navbar-brand logo ">
+            
+            <span role="img" aria-label="Logo of RBDIMMER" title="RBDIMMER"><img src="./docs_dimmerlink-overview _ RBDIMMER_files/RBDIMMER.png" class="img img-fluid" width="95" height="40" alt="RBDIMMER" loading="lazy" style=""></span>
+        </a>
+    
+            <ul class="o_header_mobile_buttons_wrap navbar-nav flex-row align-items-center gap-2 mb-0">
+        
+            <li class=" divider d-none"></li> 
+            <li class="o_wsale_my_cart  ">
+                <a href="https://www.rbdimmer.com/shop/cart" aria-label="eCommerce cart" class="o_navlink_background_hover btn position-relative rounded-circle border-0 p-1 text-reset">
+                    <div class="">
+                        <i class="fa fa-shopping-cart fa-stack"></i>
+                        <sup class="my_cart_quantity badge bg-primary position-absolute top-0 end-0 mt-n1 me-n1 rounded-pill d-none" data-order-id="">0</sup>
+                    </div>
+                </a>
+            </li>
+        
+        
+            <li class="o_wsale_my_wish d-none  o_wsale_my_wish_hide_empty">
+                <a href="https://www.rbdimmer.com/shop/wishlist" class="o_navlink_background_hover btn position-relative rounded-circle border-0 p-1 text-reset">
+                    <div class="">
+                        <i class="fa fa-1x fa-heart fa-stack"></i>
+                        <sup class="my_wish_quantity o_animate_blink badge bg-primary position-absolute top-0 end-0 mt-n1 me-n1">0</sup>
+                    </div>
+                </a>
+            </li>
+        
+                <li class="o_not_editable">
+                    <button class="nav-link btn me-auto p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#top_menu_collapse_mobile" aria-controls="top_menu_collapse_mobile" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </li>
+            </ul>
+            <div id="top_menu_collapse_mobile" class="offcanvas offcanvas-end o_navbar_mobile">
+                <div class="offcanvas-header justify-content-end o_not_editable">
+                    <button type="button" class="nav-link btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body d-flex flex-column justify-content-between h-100 w-100">
+                    <ul class="navbar-nav">
+                        
+                        
+        <li class="">
+    <form method="get" class="o_searchbar_form s_searchbar_input " action="https://www.rbdimmer.com/website/search" data-snippet="s_searchbar_input">
+            <div role="search" class="input-group mb-3">
+        <input type="search" name="search" class="search-query form-control oe_search_box rounded-start-pill text-bg-light ps-3 border-0 bg-light" placeholder="Search..." data-search-type="all" data-limit="0" data-display-image="true" data-display-description="true" data-display-extra-link="true" data-display-detail="true" data-order-by="name asc">
+        <button type="submit" aria-label="Search" title="Search" class="btn oe_search_button rounded-end-pill bg-o-color-3 pe-3">
+            <i class="oi oi-search"></i>
+        </button>
+    </div>
+
+            <input name="order" type="hidden" class="o_search_order_by" value="name asc">
+            
+    
+        </form>
+        </li>
+                        
+    <ul role="menu" class="nav navbar-nav top_menu  ">
+        
+
+                            
+    <li role="presentation" class="nav-item">
+        <a role="menuitem" href="https://www.rbdimmer.com/" class="nav-link ">
+            <span>Home</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item">
+        <a role="menuitem" href="https://www.rbdimmer.com/dimmers-pricing" class="nav-link ">
+            <span>Shop</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item dropdown position-static">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle o_mega_menu_toggle d-flex justify-content-between align-items-center active" data-bs-display="static">
+            <span>AC Dimmers</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item dropdown position-static">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle o_mega_menu_toggle  d-flex justify-content-between align-items-center" data-bs-display="static">
+            <span>Solutions</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item">
+        <a role="menuitem" href="https://www.rbdimmer.com/diy-insights" class="nav-link ">
+            <span>DIY Insights</span>
+        </a>
+    </li>
+    <li role="presentation" class="nav-item dropdown ">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle   d-flex justify-content-between align-items-center">
+            <span>Documentation</span>
+        </a><ul role="menu" class="dropdown-menu position-relative rounded-0 o_dropdown_without_offset">
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/dimmers-guide" class="dropdown-item ">
+            <span>Dimmers Guide</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/selecting-dimmer" class="dropdown-item ">
+            <span>Selecting Dimmer</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/hardware-connection" class="dropdown-item ">
+            <span>Hardware Connection</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/universal-library-for-esp32" class="dropdown-item ">
+            <span>Universal library for ESP32</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/dimmers-universal-library-for-esp32-arduino-guide-and-examples" class="dropdown-item ">
+            <span>- Arduino guide and examples</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/docs/dimmers-universal-library-for-esp32-esp-idf-fraimwork-c-guide-and-examples" class="dropdown-item ">
+            <span>- ESP-IDF fraimwork C guide and examples.</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li role="presentation" class="nav-item dropdown ">
+        <a data-bs-toggle="dropdown" href="https://www.rbdimmer.com/docs/dimmerlink-overview#" role="menuitem" class="nav-link dropdown-toggle   d-flex justify-content-between align-items-center">
+            <span>Help</span>
+        </a><ul role="menu" class="dropdown-menu position-relative rounded-0 o_dropdown_without_offset">
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/contactus" class="dropdown-item ">
+            <span>Contact us</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/customer-support" class="dropdown-item ">
+            <span>Customer Support</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/order-chang-and-cancel" class="dropdown-item ">
+            <span>Changing / Canceling order</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/refund-and-returns" class="dropdown-item ">
+            <span>Order return &amp; refund</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/lost-shipments" class="dropdown-item ">
+            <span>Lost shipment</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/privacy-policy" class="dropdown-item ">
+            <span>Privacy Policy</span>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a role="menuitem" href="https://www.rbdimmer.com/terms-and-conditions" class="dropdown-item ">
+            <span>Terms and Conditions</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+                        
+    </ul>
+                        
+        <li class="">
+                <div data-name="Text" class="s_text_block mt-2 border-top pt-2 o_border_contrast">
+                    
+                </div>
+        </li>
+                        
+                    </ul>
+                    <ul class="navbar-nav gap-2 mt-3 w-100">
+                        
+        <li data-name="Language Selector" class="o_header_language_selector ">
+        
+            <div class="js_language_selector dropup dropdown d-print-none">
+                <button type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="border-0 dropdown-toggle nav-link d-flex align-items-center w-100">
+                    <span class="me-auto small">English (US)</span>
+                </button>
+                <div role="menu" class="dropdown-menu w-100">
+                        <a class="dropdown-item js_change_lang active" role="menuitem" href="https://www.rbdimmer.com/docs/dimmerlink-overview" data-url_code="en" title="English (US)">
+                            <span class="me-auto small">English (US)</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/fr/docs/dimmerlink-overview" data-url_code="fr" title=" Français">
+                            <span class="me-auto small"> Français</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/de/docs/dimmerlink-overview" data-url_code="de" title=" Deutsch">
+                            <span class="me-auto small"> Deutsch</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/it/docs/dimmerlink-overview" data-url_code="it" title=" Italiano">
+                            <span class="me-auto small"> Italiano</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/ru/docs/dimmerlink-overview" data-url_code="ru" title=" русский язык">
+                            <span class="me-auto small"> русский язык</span>
+                        </a>
+                        <a class="dropdown-item js_change_lang " role="menuitem" href="https://www.rbdimmer.com/es/docs/dimmerlink-overview" data-url_code="es" title=" Español">
+                            <span class="me-auto small"> Español</span>
+                        </a>
+                </div>
+            </div>
+        
+        </li>
+                        
+            <li class=" o_no_autohide_item">
+                <a href="https://www.rbdimmer.com/web/login" class="nav-link o_nav_link_btn w-100 border text-center">Sign in</a>
+            </li>
+                        
+        
+        
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    
+    </nav>
+    
+        </header>
+                <main>
+                    
+        <div id="wrap" class="oe_structure">
+            <section class="s_text_block pt40 pb40 o_colored_level" data-snippet="s_text_block">
+                <div class="container">
+
+    <section class="s_table_of_content pt24 pb24 o_cc o_cc1 o_colored_level" data-snippet="s_table_of_content" data-name="pages navigation">
+        <div class="container-fluid">
+            <div class="row s_nb_column_fixed">
+                <div class="col-lg-3 d-print-none d-none d-lg-block">
+    <div class="position-sticky" style="top: 60px; height: calc(100vh - 60px); overflow-y: auto;">
+                            <style>
+                                .menu-nested {
+                                    padding-left: 1.5rem !important;
+                                }
+                                .nav-link.active {
+                                    background-color: #0d6efd !important;
+                                    color: #ffffff !important;
+                                    font-weight: 600 !important;
+                                }
+                                .nav-link:hover {
+                                    background-color: #e9ecef !important;
+                                }
+                                .nav-link.active:hover {
+                                    background-color: #0b5ed7 !important;
+                                }
+                            </style>
+                            <ul class="nav nav-pills flex-column">
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-overview">
+                                            &gt;
+                                            <span>Overview</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-QuickStart">
+                                            &gt;
+                                            <span>Quick Start</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-HardwareConnection">
+                                            &gt;
+                                            <span>Hardware Connection</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-UartCommunication">
+                                            &gt;
+                                            <span>UART Communication</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-I2CCommunication">
+                                            &gt;
+                                            <span>I2C Communication</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-SingleBoardComputers">
+                                            &gt;
+                                            <span>Single Board Computers</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-AdvancedUsage">
+                                            &gt;
+                                            <span>Advanced Usage</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-esphome/component">
+                                            &gt;
+                                            <span>ESPHome DimmerLink Component</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-esphome">
+                                            &gt;
+                                            <span>ESPHome Integration</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link menu-nested" href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-integration">
+                                            &gt;
+                                            <span>- Lambda Integration</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link menu-nested" href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-overview">
+                                            &gt;
+                                            <span>- Lambda Overview</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link menu-nested" href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-reference">
+                                            &gt;
+                                            <span>- Lambda Reference</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link menu-nested" href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-entities">
+                                            &gt;
+                                            <span>- Lambda Entities</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link menu-nested" href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-examples">
+                                            &gt;
+                                            <span>- Lambda Examples</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link menu-nested" href="https://www.rbdimmer.com/docs/dimmerlink-esphome/lambda-troubleshooting">
+                                            &gt;
+                                            <span>- Lambda FAQ &amp; Troubleshooting</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a class="nav-link" href="https://www.rbdimmer.com/docs/dimmerlink-FAQTroubleshooting">
+                                            &gt;
+                                            <span>FAQ &amp; Troubleshooting</span>
+                                        </a>
+                                    </li>
+                            </ul>
+    </div>
+</div>
+                <div class="col-lg-7 s_table_of_content_main oe_structure oe_empty o_colored_level" data-name="Content" data-editor-message-default="true" data-editor-message="DRAG BUILDING BLOCKS HERE">
+                    <section class="s_text_block pt0 o_colored_level pb32" data-snippet="s_text_block" data-name="Section">
+                        <div class="container s_allow_columns">
+                            <h1 class="o_default_snippet_text" id="dimmerlink-user-documentation">DimmerLink — User Documentation</h1>
+<p class="o_default_snippet_text">AC dimmer controller for lamp brightness control via TRIAC. Connects to your project (Arduino, ESP32, Raspberry Pi, etc.) and allows you to control AC dimmers with simple commands.</p>
+<p class="o_default_snippet_text"><img src="./docs_dimmerlink-overview _ RBDIMMER_files/DimLink-connection-ArdRasp.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="5402" data-original-src="/web/image/5402-2a17c746/DimLink-connection-ArdRasp.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy" style=""></p>
+<p class="o_default_snippet_text"><strong>Working with DimmerLink is easy.</strong></p>
+<hr>
+<p><img src="./docs_dimmerlink-overview _ RBDIMMER_files/DimLink_pic_1000x1000.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="5420" data-original-src="/web/image/5420-f1571d3b/DimLink_pic_1000x1000.jpeg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy" style=""></p>
+<ul>
+<li><strong>Product Page</strong>: <a href="https://www.rbdimmer.com/shop/dimmerlink-controller-uart-i2c-interface-for-ac-dimmers-48">DImmerLink on rbdimmer.com</a></li>
+<li><strong>AliExpress Page</strong>: <a href="https://fr.aliexpress.com/item/1005011583805008.html">DImmerLink on AliExpress</a></li>
+</ul>
+<hr>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_key-features">Key Features</h2>
+<p class="o_default_snippet_text">✅ <strong>FLICKER-FREE</strong> — Dedicated Cortex-M+ handles all critical timings. No software delays, interrupt conflicts, or flickering.</p>
+<p class="o_default_snippet_text">✅ <strong>NO LIBRARIES REQUIRED</strong> — Send simple 3-4 byte commands via UART or I2C. Works with any programming language. Literally 5 lines of code.</p>
+<p class="o_default_snippet_text">✅ <strong>UNIVERSAL COMPATIBILITY</strong> — Arduino, ESP32, ESP8266, Raspberry Pi, STM32, any MCU with UART/I2C. Supports 1.8V, 3.3V, 5V logic levels.</p>
+<p class="o_default_snippet_text">✅ <strong>BRIGHTNESS CONTROL</strong> — 0-100% range</p>
+<p class="o_default_snippet_text">✅ <strong>DIMMING CURVES</strong> — Linear, RMS (for incandescent), Logarithmic. Auto-detection of 50/60Hz mains frequency.</p>
+<p class="o_default_snippet_text">✅ <strong>MAINS DETECTION</strong> — Automatic mains frequency detection (50/60 Hz)</p>
+<p class="o_default_snippet_text">✅ <strong>DUAL INTERFACE</strong> — UART (115200 8N1) or I2C. Switch by command at any time.</p>
+<p class="o_default_snippet_text">✅ <strong>ULTRA-COMPACT</strong> — Only 18×12mm. Standard 0.1" pins. Fits in any enclosure.</p>
+<p class="o_default_snippet_text">✅ <strong>PLUG &amp; PLAY</strong> — Connect, power up, send command. Working dimmer in 5 minutes.</p>
+<hr>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_the-problem-we-solve">The Problem We Solve</h2>
+<p class="o_default_snippet_text">Every maker knows this pain: you add an AC dimmer library to your project, and suddenly your lamps start flickering, timings go haywire, and you spend hours debugging interrupt conflicts. DimmerLink completely eliminates this problem by offloading all time-critical operations to a dedicated Cortex-M+ microcontroller.</p>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_how-it-works">How It Works</h2>
+<p class="o_default_snippet_text">Connect DimmerLink between your controller (Arduino, ESP32, Raspberry Pi, or any MCU) and an AC dimmer module. Send a 3-byte command like <code class="inline">SET 50%</code> via UART or write a value to an I2C register. The controller handles zero-cross detection, calculates phase angle, and controls the TRIAC with microsecond precision. No libraries. No interrupts. No conflicts with your code.</p>
+<p class="o_default_snippet_text">Or connect to remote transmission modules like LoRa, GSM/GPRS, Bluetooth or WiFi bridges, or simply to your PC via USB-UART modules like CH340, CP2102/CP2104. Industrial RS-232 modules. No code required, just commands via terminal.</p>
+<hr>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_which-interface-to-choose">Which Interface to Choose?</h2>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Criteria</th>
+<th>UART</th>
+<th>I2C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection simplicity</td>
+<td>2 wires + power</td>
+<td>2 wires + power</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>115200 baud</td>
+<td>100 kHz</td>
+</tr>
+<tr>
+<td>Multiple devices</td>
+<td>No</td>
+<td>Yes (different addresses)</td>
+</tr>
+<tr>
+<td>Works with bridges</td>
+<td>Yes (USB-UART, WiFi, LoRa)</td>
+<td>Limited</td>
+</tr>
+<tr>
+<td><strong>Recommendation</strong></td>
+<td>For remote control</td>
+<td><strong>For local control</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p class="o_default_snippet_text"><strong>💡 Tip:</strong> We recommend I2C for beginners — simpler code, clearer structure.</p>
+</blockquote>
+<hr>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_compatibility">Compatibility</h2>
+<p class="o_default_snippet_text">DimmerLink supports <strong>1.8V, 3.3V and 5V</strong> logic levels — direct connection without level converters!</p>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Platform</th>
+<th>UART</th>
+<th>I2C</th>
+<th>Logic Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arduino Uno/Nano</td>
+<td>✓</td>
+<td>✓</td>
+<td>5V ✓</td>
+</tr>
+<tr>
+<td>Arduino Mega</td>
+<td>✓</td>
+<td>✓</td>
+<td>5V ✓</td>
+</tr>
+<tr>
+<td>ESP8266</td>
+<td>✓</td>
+<td>✓</td>
+<td>3.3V ✓</td>
+</tr>
+<tr>
+<td>ESP32</td>
+<td>✓</td>
+<td>✓</td>
+<td>3.3V ✓</td>
+</tr>
+<tr>
+<td>STM32 (Blue Pill)</td>
+<td>✓</td>
+<td>✓</td>
+<td>3.3V ✓</td>
+</tr>
+<tr>
+<td>Raspberry Pi Pico</td>
+<td>✓</td>
+<td>✓</td>
+<td>3.3V ✓</td>
+</tr>
+<tr>
+<td>Raspberry Pi 3/4/5</td>
+<td>✓</td>
+<td>✓</td>
+<td>3.3V ✓</td>
+</tr>
+<tr>
+<td>Orange Pi</td>
+<td>✓</td>
+<td>✓</td>
+<td>3.3V ✓</td>
+</tr>
+<tr>
+<td>Banana Pi</td>
+<td>✓</td>
+<td>✓</td>
+<td>3.3V ✓</td>
+</tr>
+<tr>
+<td>ATtiny, nRF52, MSP430</td>
+<td>✓</td>
+<td>✓</td>
+<td>1.8V ✓</td>
+</tr>
+</tbody>
+</table>
+<p class="o_default_snippet_text"><strong>This is just a basic list — DimmerLink works with any microcontroller that has UART or I2C!</strong></p>
+<hr>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_quick-example">Quick Example</h2>
+<p class="o_default_snippet_text"><strong>Arduino + I2C — set brightness to 50%:</strong></p>
+<div class="code-block-wrapper" style="position: relative; margin: 1rem 0;"><div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: #1e1e1e; border: 1px solid #333; border-bottom: none; border-radius: 6px 6px 0 0;"><span style="font-size: 0.875rem; color: #d4d4d4; font-weight: 500;">cpp</span><button class="btn btn-sm" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.querySelector(&#39;code&#39;).textContent).then(() =&gt; { this.innerHTML = &#39;✓ Copied&#39;; setTimeout(() =&gt; this.innerHTML = &#39;📋 Copy&#39;, 2000); });" style="background: #2d2d2d; color: #d4d4d4; border: 1px solid #444; padding: 2px 8px; font-size: 12px; cursor: pointer; border-radius: 3px;">📋 Copy</button></div><pre class="language-cpp" style="margin: 0; border: 1px solid #333; border-top: none; border-radius: 0 0 6px 6px; background: #1e1e1e;" tabindex="0"><code class="language-cpp" id="code-block-0"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> </span>
+
+<span class="token keyword">void</span> <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Wire<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Set brightness to 50%</span>
+    Wire<span class="token punctuation">.</span><span class="token function">beginTransmission</span><span class="token punctuation">(</span><span class="token number">0x50</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Wire<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Brightness register</span>
+    Wire<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 50%</span>
+    Wire<span class="token punctuation">.</span><span class="token function">endTransmission</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre></div>
+<p class="o_default_snippet_text"><strong>Python + UART:</strong></p>
+<div class="code-block-wrapper" style="position: relative; margin: 1rem 0;"><div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: #1e1e1e; border: 1px solid #333; border-bottom: none; border-radius: 6px 6px 0 0;"><span style="font-size: 0.875rem; color: #d4d4d4; font-weight: 500;">python</span><button class="btn btn-sm" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.querySelector(&#39;code&#39;).textContent).then(() =&gt; { this.innerHTML = &#39;✓ Copied&#39;; setTimeout(() =&gt; this.innerHTML = &#39;📋 Copy&#39;, 2000); });" style="background: #2d2d2d; color: #d4d4d4; border: 1px solid #444; padding: 2px 8px; font-size: 12px; cursor: pointer; border-radius: 3px;">📋 Copy</button></div><pre class="language-python" style="margin: 0; border: 1px solid #333; border-top: none; border-radius: 0 0 6px 6px; background: #1e1e1e;" tabindex="0"><code class="language-python" id="code-block-1"><span class="token keyword">import</span> serial
+
+ser <span class="token operator">=</span> serial<span class="token punctuation">.</span>Serial<span class="token punctuation">(</span><span class="token string">'/dev/ttyUSB0'</span><span class="token punctuation">,</span> <span class="token number">115200</span><span class="token punctuation">)</span>
+ser<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0x02</span><span class="token punctuation">,</span> <span class="token number">0x53</span><span class="token punctuation">,</span> <span class="token number">0x00</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># SET dimmer 0 to 50%</span>
+response <span class="token operator">=</span> ser<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"OK"</span> <span class="token keyword">if</span> response<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">else</span> <span class="token string">"Error"</span><span class="token punctuation">)</span>
+</code></pre></div>
+<p class="o_default_snippet_text"><strong>Serial Terminal Example:</strong></p>
+<div class="code-block-wrapper" style="position: relative; margin: 1rem 0;"><div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: #1e1e1e; border: 1px solid #333; border-bottom: none; border-radius: 6px 6px 0 0;"><span style="font-size: 0.875rem; color: #d4d4d4; font-weight: 500;">python</span><button class="btn btn-sm" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.querySelector(&#39;code&#39;).textContent).then(() =&gt; { this.innerHTML = &#39;✓ Copied&#39;; setTimeout(() =&gt; this.innerHTML = &#39;📋 Copy&#39;, 2000); });" style="background: #2d2d2d; color: #d4d4d4; border: 1px solid #444; padding: 2px 8px; font-size: 12px; cursor: pointer; border-radius: 3px;">📋 Copy</button></div><pre class="language-python" style="margin: 0; border: 1px solid #333; border-top: none; border-radius: 0 0 6px 6px; background: #1e1e1e;" tabindex="0"><code class="language-python" id="code-block-2"><span class="token number">1.</span> Port → select your COM port
+<span class="token number">2.</span> Baud<span class="token punctuation">:</span> <span class="token number">115200</span>
+<span class="token number">3.</span> Send → <span class="token string">"Send Numbers"</span> tab
+<span class="token number">4.</span> Enter<span class="token punctuation">:</span> <span class="token number">02</span> <span class="token number">53</span> <span class="token number">00</span> <span class="token number">32</span> <span class="token keyword">or</span> <span class="token number">0x02</span> <span class="token number">0x53</span> <span class="token number">0x00</span> <span class="token number">0x32</span> <span class="token punctuation">(</span>HEX <span class="token number">32</span> <span class="token keyword">is</span> <span class="token number">50</span> <span class="token keyword">in</span> decimal<span class="token punctuation">)</span>
+<span class="token number">5.</span> Click <span class="token string">"Send Numbers"</span>
+</code></pre></div>
+<hr>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_code-examples">Code Examples</h2>
+<p>Ready-to-use examples are located in the <a href="https://github.com/robotdyn-dimmer/DimmerLink/tree/main/examples" target="_blank">github.com/robotdyn-dimmer/DimmerLink/tree/main/examples</a>&nbsp;</p>
+<div class="code-block-wrapper" style="position: relative; margin: 1rem 0;"><div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: #1e1e1e; border: 1px solid #333; border-bottom: none; border-radius: 6px 6px 0 0;"><span style="font-size: 0.875rem; color: #d4d4d4; font-weight: 500;">python</span><button class="btn btn-sm" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.querySelector(&#39;code&#39;).textContent).then(() =&gt; { this.innerHTML = &#39;✓ Copied&#39;; setTimeout(() =&gt; this.innerHTML = &#39;📋 Copy&#39;, 2000); });" style="background: #2d2d2d; color: #d4d4d4; border: 1px solid #444; padding: 2px 8px; font-size: 12px; cursor: pointer; border-radius: 3px;">📋 Copy</button></div><pre class="language-python" style="margin: 0; border: 1px solid #333; border-top: none; border-radius: 0 0 6px 6px; background: #1e1e1e;" tabindex="0"><code class="language-python" id="code-block-3">examples<span class="token operator">/</span>
+├── arduino<span class="token operator">/</span>
+│   ├── uart_basic<span class="token punctuation">.</span>ino
+│   └── i2c_basic<span class="token punctuation">.</span>ino
+├── python<span class="token operator">/</span>
+│   ├── uart_example<span class="token punctuation">.</span>py
+│   └── i2c_example<span class="token punctuation">.</span>py
+└── micropython<span class="token operator">/</span>
+    ├── uart_example<span class="token punctuation">.</span>py
+    └── i2c_example<span class="token punctuation">.</span>py
+</code></pre></div>
+<hr>
+<p class="o_default_snippet_text"><br><br></p>
+<h2 class="o_default_snippet_text" data-anchor="true" id="table_of_content_heading_support">Support</h2>
+<ul>
+<li><strong>GitHub Issues</strong>: <a href="https://github.com/robotdyn-dimmer/DimmerLink/issues">Report an issue</a></li>
+<li><strong>Product Page</strong>: <a href="https://www.rbdimmer.com/shop/dimmerlink-controller-uart-i2c-interface-for-ac-dimmers-48">DImmerLink on rbdimmer.com</a></li>
+<li><strong>AliExpress Page</strong>: <a href="https://fr.aliexpress.com/item/1005011583805008.html">DImmerLink on AliExpress</a></li>
+</ul>
+<hr>
+<p class="o_default_snippet_text"><strong>Documentation Version</strong>: 1.0<br>
+<strong>Date</strong>: 2026-01</p>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-2 s_table_of_content_navbar_wrap s_table_of_content_navbar_sticky s_table_of_content_vertical_navbar d-print-none d-none d-lg-block o_not_editable o_cc o_cc1 o_colored_level" data-name="Navbar">
+                    <div class="s_table_of_content_navbar list-group o_no_link_popover" style="top: 78px; max-height: calc(-98px + 100vh);">
+                        <a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_table-of-contents" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Table of Contents</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_key-features" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0 active">Key Features</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_the-problem-we-solve" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">The Problem We Solve</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_how-it-works" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">How It Works</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_which-interface-to-choose" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Which Interface to Choose?</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_compatibility" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Compatibility</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_quick-example" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Quick Example</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_code-examples" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Code Examples</a>
+<a href="https://www.rbdimmer.com/docs/dimmerlink-overview#table_of_content_heading_support" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>                </div>
+            </section>
+        </div>
+    
+        <div id="o_shared_blocks" class="oe_unremovable"></div>
+                <div id="o_search_modal_block"><div class="modal fade css_editable_mode_hidden" id="o_search_modal" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-lg pt-5">
+                        <div class="modal-content mt-5">
+    <form method="get" class="o_searchbar_form s_searchbar_input " action="https://www.rbdimmer.com/website/search" data-snippet="s_searchbar_input">
+            <div role="search" class="input-group input-group-lg">
+        <input type="search" name="search" class="search-query form-control oe_search_box border border-end-0 p-3 border-0 bg-light" placeholder="Search..." data-search-type="all" data-limit="5" data-display-image="true" data-display-description="true" data-display-extra-link="true" data-display-detail="true" data-order-by="name asc" autocomplete="off">
+        <button type="submit" aria-label="Search" title="Search" class="btn oe_search_button border border-start-0 px-4 bg-o-color-4">
+            <i class="oi oi-search"></i>
+        </button>
+    </div>
+
+            <input name="order" type="hidden" class="o_search_order_by" value="name asc">
+            
+    
+        </form>
+                        </div>
+                    </div>
+                </div></div></main>
+                <footer id="bottom" data-anchor="true" data-name="Footer" class="o_footer o_colored_level o_cc ">
+                    <div id="footer" class="oe_structure oe_structure_solo">
+            <section class="s_text_block pb56 o_snippet_invisible pt56" data-snippet="s_text_block" data-name="Text" data-visibility="conditional" data-visibility-value-utm-source-rule="">
+                <div class="container">
+                    <div class="row o_grid_mode" data-row-count="8">
+                        <div class="o_colored_level o_grid_item g-col-lg-3 g-height-8 col-lg-3" style="grid-area: 1 / 1 / 9 / 4; z-index: 1;">
+                            <h5><span style="font-weight: normal;">DIMMERS</span></h5><p>
+
+</p>
+                            <ul class="list-unstyled">
+                                <li class="list-item py-1"><a href="https://www.rbdimmer.com/shop/category/dimmers-1">Catalog</a></li><li class="list-item py-1"><a href="https://www.rbdimmer.com/blog/dimmers-projects-5">Dimmers Projects</a></li><li class="list-item py-1"><a href="https://www.rbdimmer.com/odoo/knowledge/45">Dimmers Guide</a></li><li></li></ul><div class="s_hr oe_snippet_body pt16 pb8" data-snippet="s_hr" data-name="Separator">
+        <hr class="w-100 mx-auto">
+    </div><ul class="list-unstyled"><li><h5><span style="font-weight: normal;">PARTNERSHIP</span></h5></li><li>
+<a href="https://www.rbdimmer.com/become-a-distributor-or-partner">Become a Distributor or Partner</a>
+
+</li><li>
+
+</li>
+                            </ul>
+                        </div>
+                        
+                        
+                        
+                        
+                    </div>
+                </div>
+            </section>
+        </div>
+                </footer>
+            </div>
+            <script id="tracking_code" async="async" src="./docs_dimmerlink-overview _ RBDIMMER_files/js"></script>
+            <script id="tracking_code_config">
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied',
+                });
+                gtag('js', new Date());
+                gtag('config', 'G-99ZG0HM0BG');
+                function allConsentsGranted() {
+                    gtag('consent', 'update', {
+                        'ad_storage': 'granted',
+                        'ad_user_data': 'granted',
+                        'ad_personalization': 'granted',
+                        'analytics_storage': 'granted',
+                    });
+                }
+                    allConsentsGranted();
+            </script>
+        
+        <script defer="" src="./docs_dimmerlink-overview _ RBDIMMER_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;0385a9e8ea9d4940a1583508f0d95244&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+<iframe height="0" width="0" style="display: none; visibility: hidden;" src="./docs_dimmerlink-overview _ RBDIMMER_files/saved_resource.html"></iframe><div class="o-main-components-container"><div class="o-overlay-container"></div><div></div><div class="editor_notification_manager o_notification_manager o_upload_progress_toast"></div><div class="o_notification_manager"></div><div class="position-fixed w-100 h-100 top-0 pe-none"><div class="d-flex flex-column container align-items-end"></div></div></div></body></html>
