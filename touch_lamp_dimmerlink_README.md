@@ -71,6 +71,20 @@ esp32_touch:
 
 The touch pad on **GPIO13** detects when the user touches the pad and cycles through brightness levels.
 
+Quick testing tip: to view raw touch values while you test, set `setup_mode: true` temporarily:
+
+```yaml
+esp32_touch:
+  setup_mode: true
+  measurement_duration: 0.25ms
+```
+
+Then watch the web UI or `logger` output to capture a `no_touch` (idle) maximum and a `touch` minimum.
+Calculate `range = no_touch_max - touch_min` and pick a threshold at the midpoint or closer to the
+idle side for hysteresis (e.g. `threshold = no_touch_max - (range * 0.75)`). Remember to set
+`setup_mode: false` and restore your chosen `threshold:` before putting the device back into
+normal operation.
+
 **Behavior:**
 - Short touch (10-500ms): Increments brightness to next level (0% → 25% → 50% → 75% → 100% → 0%)
 - Uses debouncing filters to prevent spurious triggers
@@ -148,7 +162,9 @@ If the touch pad is too sensitive or not sensitive enough, modify:
 ```yaml
 binary_sensor:
   - platform: esp32_touch
-    threshold: 550000  # Adjust this value (higher = less sensitive)
+    # For ESP32 S1/S0 boards (esp32doit-devkit-v1) a good starting value
+    # is around 2000. Increase to 3000+ for less sensitivity.
+    threshold: 2000  # Adjust this value (higher = less sensitive)
 ```
 
 ### Changing UART Pins

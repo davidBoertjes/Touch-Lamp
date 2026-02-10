@@ -5,6 +5,7 @@ esphome:
 
 esp32:
   board: esp32doit-devkit-v1
+  # minimum_chip_revision: "3.1"
   # board: esp32-s3-devkitc-1
   framework:
     type: arduino
@@ -26,7 +27,7 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-
+  
   # manual_ip:
   #   static_ip: 192.168.2.57
   #   gateway: 192.168.2.1
@@ -46,16 +47,12 @@ captive_portal:
 
 esp32_touch:
   setup_mode: false
-  # Use a longer measurement duration for classic ESP32 (S1/S0) modules
-  # This improves stability on older chips compared to shorter durations
-  # measurement_duration: 3ms # use for s1/s0 chips
-  # measurement_duration: 0.25ms # use for s2/s3 chips
+  # measurement_duration: 0.25ms
   
 binary_sensor:
   - platform: esp32_touch
     name: "Touch Pad Pin 13"
     pin: GPIO13
-    # Starting threshold suitable for ESP32 (non-S2/S3) boards. Tune as needed.
     threshold: 700
     # filters:
     #   # Small filter, to debounce the spurious events.
@@ -70,7 +67,6 @@ binary_sensor:
         - number.increment:
             id: dimmer_control
             cycle: true
-
 number:     
   - platform: template
     name: Dimmer Control
@@ -105,9 +101,9 @@ light:
 output:
   - platform: ac_dimmer
     id: ac_dimmer_output
-    gate_pin: GPIO25  # Gate pin for controlling the dimmer
+    gate_pin: GPIO25  # Gate pin for controlling the dimmer (GPIO12)
     zero_cross_pin:
-      number: GPIO18  # Zero-cross pin for synchronization
+      number: GPIO18  # Zero-cross pin for synchronization (GPIO5)
       mode:
         input: True
         pullup: True

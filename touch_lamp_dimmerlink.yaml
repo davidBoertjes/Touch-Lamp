@@ -1,6 +1,7 @@
 esphome:
   name: "smart-touch-1-dimmerlink"
-  friendly_name: Smart Touch Lamp 1 DimmerLink
+  friendly_name: Smart Touch Lamp 1
+  compile_process_limit: 1
 
 esp32:
   board: esp32doit-devkit-v1
@@ -15,16 +16,21 @@ logger:
 
 # Enable Home Assistant API
 api:
-  encryption:
-    key: !secret api_key
+  # encryption:
+  #   key: !secret api_key
 
 ota:
   - platform: esphome
-    password: !secret ota_password
+    # password: !secret ota_password
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+
+  # manual_ip:
+  #   static_ip: 192.168.2.57
+  #   gateway: 192.168.2.1
+  #   subnet: 255.255.255.0
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -39,7 +45,10 @@ captive_portal:
 
 esp32_touch:
   setup_mode: false
-  measurement_duration: 0.25ms
+  # Use a longer measurement duration for classic ESP32 (S1/S0) modules
+  # This improves stability on older chips compared to shorter durations
+  # measurement_duration: 3ms # use for s1/s0 chips
+  # measurement_duration: 0.25ms # use for s2/s3 chips
 
 # UART interface for DimmerLink board
 # DimmerLink connects via UART at 115200 baud
@@ -56,11 +65,13 @@ binary_sensor:
   - platform: esp32_touch
     name: "Touch Pad Pin 13"
     pin: GPIO13
-    threshold: 550000
-    filters:
-      # Small filter, to debounce the spurious events.
-      - delayed_on: 10ms
-      - delayed_off: 10ms
+    # Starting threshold suitable for ESP32 (non-S2/S3) boards. Tune as needed.
+    threshold: 700
+    # filters:
+    #   # Small filter, to debounce the spurious events.
+    #   - delayed_on: 10ms
+    #   - delayed_off: 10ms
+    #on_press:
     on_click:
     - min_length: 10ms
       max_length: 500ms

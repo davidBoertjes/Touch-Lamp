@@ -15,15 +15,13 @@ The smart lamp features capacitive touch pad control for brightness adjustment a
 
 ```
 Touch Lamp/
-├── README.md                                      # This file - project overview
-├── touch_lamp.yaml                               # Original configuration (direct AC dimmer)
-├── touch_lamp_description.md                     # Original config documentation
-├── touch_lamp_dimmerlink.yaml                    # New configuration (DimmerLink UART)
-├── touch_lamp_dimmerlink_README.md               # DimmerLink config documentation
-├── touch_lamp_calibration_helper.yaml            # Touch pad calibration helper (temporary)
-├── CALIBRATION_HELPER_README.md                  # Calibration guide and instructions
-├── docs_dimmerlink-overview_RBDIMMER.html        # DimmerLink hardware documentation
-└── docs_dimmerlink-overview_RBDIMMER_files/       # DimmerLink docs assets
+├── README.md                           # This file - project overview
+├── touch_lamp.yaml                     # Original configuration (direct AC dimmer)
+├── touch_lamp_description.md           # Original config documentation
+├── touch_lamp_dimmerlink.yaml          # New configuration (DimmerLink UART)
+├── touch_lamp_dimmerlink_README.md     # DimmerLink config documentation
+├── docs_dimmerlink-overview_RBDIMMER.html  # DimmerLink hardware documentation
+└── docs_dimmerlink-overview_RBDIMMER_files/ # DimmerLink docs assets
 ```
 
 ## Hardware Requirements
@@ -132,45 +130,7 @@ esphome run esphome_config.yaml
 3. Complete the pairing process
 4. New entities will appear in Home Assistant
 
-## Touch Pad Calibration
 
-The touch pad sensitivity is controlled by the `threshold` parameter. Finding the optimal threshold is critical for reliable operation.
-
-### Quick Calibration Guide
-
-To determine the best threshold value for your specific hardware setup:
-
-1. **Flash the calibration helper**:
-   ```bash
-   esphome run touch_lamp_calibration_helper.yaml
-   ```
-
-2. **Follow the guided calibration process**:
-   - Phase 1: Keep pad clear to establish baseline (no-touch maximum)
-   - Phase 2: Repeatedly touch the pad to capture touch range (touch minimum)
-   - System automatically calculates optimal threshold
-
-3. **Apply the result**:
-   - Note the "Recommended Threshold" value
-   - Update `threshold:` in your main configuration
-   - Flash your production config with the new value
-
-For detailed instructions, see [CALIBRATION_HELPER_README.md](CALIBRATION_HELPER_README.md).
-
-### Understanding Thresholds
-
-- **Current default**: `550000` - Works for typical ESP32 boards
-- **Higher values** (e.g., 600000): Requires stronger touches to register
-- **Lower values** (e.g., 500000): More sensitive, but risk of false positives
-
-Your optimal threshold depends on:
-- ESP32 board variant
-- Touch pad size and material
-- Wiring length and routing
-- Surrounding components and shielding
-- Environmental humidity
-
-Running the calibration helper ensures a threshold perfectly tuned for your unique hardware.
 
 ## Features
 
@@ -226,13 +186,36 @@ mosquitto_pub -t home/smart-touch-1/light/smart_lamp/command -m '{"brightness": 
 ## Customization
 
 ### Adjust Touch Sensitivity
-Edit touch threshold (higher = less sensitive):
+Edit touch threshold (higher = less sensitive). Note: ESP32-S3 boards report much larger
+raw touch values than classic ESP32 (S1/S0). For `esp32doit-devkit-v1` (S1) start near `2000`.
+
+To inspect raw touch values manually, set `setup_mode: true` under `esp32_touch:` and
+flash the device. Then observe the raw sensor readings in the web UI or `logger` output.
+
+Steps to measure and compute a good threshold:
+
+- 1) With no finger on the pad, record the maximum raw value you see (`no_touch_max`).
+- 2) While touching the pad repeatedly, record the minimum raw value (`touch_min`).
+- 3) Compute the range: `range = no_touch_max - touch_min`.
+- 4) Simple midpoint threshold: `threshold = no_touch_max - (range / 2)`.
+- 5) Recommended hysteresis threshold: `threshold = no_touch_max - (range * 0.75)`.
+
+Example YAML to enable raw values while testing:
 
 ```yaml
+esp32_touch:
+  setup_mode: true
+  measurement_duration: 3ms
+
 binary_sensor:
   - platform: esp32_touch
-    threshold: 550000  # Increase to 600000+ for less sensitivity
+    pin: GPIO13
+    threshold: 2000  # temporary while testing
 ```
+
+After you have recorded `no_touch_max` and `touch_min` and chosen a threshold, set
+`setup_mode: false` in `esp32_touch:` and update the `threshold:` value in your main
+configuration, then reflash the device.
 
 ### Change UART Pins (DimmerLink only)
 ```yaml
