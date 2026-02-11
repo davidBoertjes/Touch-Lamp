@@ -20,8 +20,6 @@ Touch Lamp/
 ├── touch_lamp_description.md           # Original config documentation
 ├── touch_lamp_dimmerlink.yaml          # New configuration (DimmerLink UART)
 ├── touch_lamp_dimmerlink_README.md     # DimmerLink config documentation
-├── docs_dimmerlink-overview_RBDIMMER.html  # DimmerLink hardware documentation
-└── docs_dimmerlink-overview_RBDIMMER_files/ # DimmerLink docs assets
 ```
 
 ## Hardware Requirements

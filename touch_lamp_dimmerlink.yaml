@@ -12,25 +12,25 @@ esp32:
 # Enable logging
 logger:
   level: info
-#  level: debug
+#  level: debug # use this when using setup_mode for esp32_touch
 
 # Enable Home Assistant API
 api:
-  # encryption:
-  #   key: !secret api_key
+  encryption:
+    key: !secret api_key
 
 ota:
   - platform: esphome
-    # password: !secret ota_password
+    password: !secret ota_password
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
 
   # manual_ip:
-  #   static_ip: 192.168.2.57
-  #   gateway: 192.168.2.1
-  #   subnet: 255.255.255.0
+  #   static_ip: xxx.xxx.xxx.xxx
+  #   gateway: xxx.xxx.xxx.xxx
+  #   subnet: xxx.xxx.xxx.xxx
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
