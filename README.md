@@ -283,7 +283,6 @@ number:
 
 - **Original Configuration**: See [touch_lamp_description.md](touch_lamp_description.md)
 - **DimmerLink Configuration**: See [touch_lamp_dimmerlink_README.md](touch_lamp_dimmerlink_README.md)
-- **DimmerLink Hardware Docs**: See [docs_dimmerlink-overview_RBDIMMER.html](docs_dimmerlink-overview_RBDIMMER.html)
 
 ## Dependencies
 
