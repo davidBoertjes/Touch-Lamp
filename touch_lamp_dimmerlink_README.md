@@ -76,7 +76,6 @@ Quick testing tip: to view raw touch values while you test, set `setup_mode: tru
 ```yaml
 esp32_touch:
   setup_mode: true
-  measurement_duration: 0.25ms
 ```
 
 Then watch the web UI or `logger` output to capture a `no_touch` (idle) maximum and a `touch` minimum.
