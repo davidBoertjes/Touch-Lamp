@@ -1,5 +1,4 @@
 secrets.yaml
 .esphome/
 device_instances/
-docs_dimmerlink-overview _ RBDIMMER.html
-docs_dimmerlink-overview _ RBDIMMER_files/
+dimmerlink_documentation/
