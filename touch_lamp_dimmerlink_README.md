@@ -19,8 +19,8 @@ This ESPHome configuration implements a touch-controlled AC lamp dimmer using th
 
 | ESP32 Pin | DimmerLink Pin | Signal | Purpose |
 |-----------|----------------|--------|---------|
-| GPIO17    | TX/RX          | TX     | Data transmission to DimmerLink |
-| GPIO16    | RX/TX          | RX     | Data reception from DimmerLink |
+| GPIO17    | RX             | TX     | Data transmission to DimmerLink |
+| GPIO16    | TX             | RX     | Data reception from DimmerLink |
 | GND       | GND            | Ground | Common ground |
 | 3.3V      | VCC            | Power  | 3.3V supply (if powered by ESP32) |
 
