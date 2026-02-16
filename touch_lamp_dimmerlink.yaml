@@ -83,23 +83,20 @@ binary_sensor:
 
 number:
   - platform: template
-    name: Dimmer Control
+    # name: Dimmer Control
     id: dimmer_control
     min_value: 0
     max_value: 100
-    step: 25
+    step: 33
     optimistic: true
+    internal: true
     set_action:
       then:
-        - uart.write:
-            id: dimmerlink_uart
-            # DimmerLink UART command format: [0x02, 0x53, dimmer_id, brightness]
-            # 0x02 = SET command
-            # 0x53 = Brightness/SET command identifier
-            # 0x00 = dimmer ID (0)
-            # last byte = brightness value (0-100)
-            data: !lambda |-
-              return {0x02, 0x53, 0x00, (uint8_t)x};
+        - lambda: |-
+            ESP_LOGI("DimmerControl:set_action", "Setting light 'dimmer' brightness to %.2f", (float)x / 100.0f);
+        - light.turn_on:
+            id: dimmer
+            brightness: !lambda 'return (float)x / 100.0f;'
 
 # restart-button
 button:
@@ -112,7 +109,9 @@ light:
     id: dimmer
     name: "Smart Lamp"
     output: dimmerlink_output
-    # restore_mode: ALWAYS_ON
+    gamma_correct: 1.0
+    restore_mode: ALWAYS_OFF
+    default_transition_length: 0s
 
 output:
   - platform: template
@@ -120,9 +119,12 @@ output:
     type: float
     write_action:
       then:
+        - lambda: |-
+            ESP_LOGI("DimmerLinkOutput:write_action", "Sending value state=%d to UART", (int)(state * 100.0));
         - uart.write:
             id: dimmerlink_uart
             # Convert brightness (0.0-1.0) to percentage (0-100)
             data: !lambda |-
               uint8_t brightness = (uint8_t)(state * 100.0);
               return {0x02, 0x53, 0x00, brightness};
+
