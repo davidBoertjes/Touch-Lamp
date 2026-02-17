@@ -18,10 +18,11 @@ This project implements a flicker-free, touch-controlled AC lamp dimmer using ES
 
 ## Hardware Requirements
 
-- **ESP32**: DoIt DevKit v1 or ESP32-S3 DevKit C-1
-- **DimmerLink UART Board**: Dedicated MCU for AC dimmer control
-- **Touch Sensor**: Capacitive touch pad (GPIO13)
-- **AC Dimmer Module**: TRIAC-based, controlled by DimmerLink
+- **ESP32**: DoIt DevKit v1 or ESP32-S3 DevKit C-1 or higher
+- **DimmerLink UART Board**: Dedicated MCU for AC dimmer control *and*
+- **AC Dimmer Module**: TRIAC-based, controlled by DimmerLink *or*
+- **Combination board**: Containing the DimmerLink and AC Dimmer
+- **Touch Sensor**: Capacitive touch pad (GPIO13) usually the frame of the lamp
 - **Power Supply**: ESP32 (5V/1A USB or 3.3V), DimmerLink (3.3V-5V), AC dimmer (110/230V)
 
 ### Wiring Summary
@@ -56,8 +57,8 @@ Touch Lamp/
 
 ## Home Assistant Integration
 
-- Lamp appears as a standard light entity with custom brightness steps
-- Touch pad acts as a physical interface for cycling brightness
+- Lamp appears as a standard light entity
+- Touch pad acts as a physical interface for cycling brightness with custom brightness steps
 - All state changes (touch, Home Assistant, automations) are synchronized
 - Restart button for device maintenance
 
@@ -66,7 +67,6 @@ Touch Lamp/
 - Adjust brightness levels in the touch sensor lambda (e.g., `{0, 30, 50, 100}`)
 - Change touch threshold for sensitivity
 - Modify UART pins if needed
-- Add more dimmers by duplicating number/light/output blocks with new IDs
 
 ## Troubleshooting
 
@@ -147,12 +147,6 @@ output:
 - DimmerLink board: [RBDimmer.com](https://www.rbdimmer.com/shop/dimmerlink-controller-uart-i2c-interface-for-ac-dimmers-48)
 - ESPHome: [esphome.io](https://esphome.io/)
 - Home Assistant: [home-assistant.io](https://www.home-assistant.io/)
-| Flicker Risk | May flicker under load | Flicker-free (dedicated MCU) |
-| Complexity | Requires ac_dimmer library | Simple 4-byte UART commands |
-| Multi-dimmer | Single dimmer per board | Multiple dimmers on same bus |
-| Pin Usage | GPIO5, GPIO12 | GPIO16, GPIO17 (configurable) |
-| Timing Control | Software-based | Hardware-based on DimmerLink |
-| Reliability | Depends on ESP32 load | Independent operation |
 
 ## Quick Start
 
@@ -222,21 +216,12 @@ esphome run esphome_config.yaml
 ## Features
 
 ### Touch Control
-- **Single touch**: Cycles through brightness levels (0% → 25% → 50% → 75% → 100% → 0%)
+- **Single touch**: Cycles through brightness levels
 - **Debouncing**: 10ms on/off filters prevent accidental triggering
 - **Threshold**: Configurable per hardware (see Calibration section above)
 
-### Brightness Levels
-- **Off**: 0%
-- **Low**: 25%
-- **Medium**: 50%
-- **High**: 75%
-- **Full**: 100%
-
 ### Home Assistant Integration
 - **Light Entity**: `light.smart_lamp` - Full brightness control via slider
-- **Number Entity**: `number.dimmer_control` - Discrete brightness levels
-- **Restart Button**: `button.restart_esp32_*` - Emergency device restart
 - **Web Interface**: IP:80 - Direct web control
 - **OTA Updates**: Update firmware without physical access
 
@@ -251,7 +236,6 @@ esphome run esphome_config.yaml
 ### Via Touch Pad
 1. Place finger on touch pad (GPIO13)
 2. Brief contact cycles to next brightness level
-3. Light brightness changes smoothly
 
 ### Via Home Assistant
 ```
@@ -267,7 +251,7 @@ light.turn_on
 
 ### Via MQTT (if enabled)
 ```bash
-mosquitto_pub -t home/smart-touch-1/light/smart_lamp/command -m '{"brightness": 200}'
+mosquitto_pub -t home/smart-touch-1/light/smart_lamp/command -m '{"brightness": 100}'
 ```
 
 ## Customization
@@ -278,6 +262,7 @@ raw touch values than classic ESP32 (S1/S0). For `esp32doit-devkit-v1` (S1) star
 
 To inspect raw touch values manually, set `setup_mode: true` under `esp32_touch:` and
 flash the device. Then observe the raw sensor readings in the web UI or `logger` output.
+Remember to set the logging level to debug during this process.
 
 Steps to measure and compute a good threshold:
 
@@ -292,7 +277,6 @@ Example YAML to enable raw values while testing:
 ```yaml
 esp32_touch:
   setup_mode: true
-  measurement_duration: 3ms
 
 binary_sensor:
   - platform: esp32_touch
@@ -303,37 +287,6 @@ binary_sensor:
 After you have recorded `no_touch_max` and `touch_min` and chosen a threshold, set
 `setup_mode: false` in `esp32_touch:` and update the `threshold:` value in your main
 configuration, then reflash the device.
-
-### Change UART Pins (DimmerLink only)
-```yaml
-uart:
-  - id: dimmerlink_uart
-    tx_pin: GPIO9
-    rx_pin: GPIO10
-```
-
-### Modify Brightness Steps
-Edit number step value:
-
-```yaml
-number:
-  - platform: template
-    step: 20  # Use 20% steps instead of 25%
-```
-
-### Add Second Dimmer
-Create additional number entity with different dimmer ID:
-
-```yaml
-number:
-  - platform: template
-    name: Dimmer 2
-    set_action:
-      then:
-        - uart.write:
-            data: !lambda
-              - return {0x02, 0x53, 0x01, (uint8_t)x};  # ID 0x01
-```
 
 ## Troubleshooting
 
@@ -436,23 +389,11 @@ number:
    - Works best with dry finger contact
 
 2. **UART Communication (DimmerLink)**
-   - Single UART bus (use multiple ESP32s for more than 8 dimmers)
    - No built-in error checking
    - Commands are fire-and-forget
 
-3. **Brightness Control**
-   - Limited to discrete 25% steps (configurable to any increment)
-   - No smooth transitions on DimmerLink (handled internally)
-
 ## Future Enhancements
 
-- [ ] Add temperature sensor
-- [ ] Implement brightness scheduling
-- [ ] Add motion detection integration
-- [ ] Support for multiple touch pads
-- [ ] Integration with voice assistants
-- [ ] Local fallback mode without WiFi
-- [ ] Power consumption monitoring
 - [ ] Advanced dimming curves configuration
 
 ## Contributing
