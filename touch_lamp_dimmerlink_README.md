@@ -1,63 +1,141 @@
-# Smart Touch Lamp with DimmerLink UART Control
+# Smart Touch Lamp with DimmerLink UART & ESPHome
 
 ## Overview
 
-This ESPHome configuration implements a touch-controlled AC lamp dimmer using the **DimmerLink board**, which communicates with the ESP32 via UART. Unlike the original configuration that used the `ac_dimmer` library directly on the ESP32, this approach offloads dimming control to a dedicated DimmerLink microcontroller, eliminating flicker and timing conflicts.
+This configuration uses ESPHome on an ESP32 to control an AC lamp dimmer via the DimmerLink UART board. The system provides flicker-free dimming, custom brightness cycling, and robust Home Assistant integration. All state changes are synchronized between touch input and Home Assistant, and custom brightness levels are easily adjustable.
 
 ## Key Features
 
-- **Touch-based brightness control** using ESP32 capacitive touch pads
-- **UART communication** (115200 baud) with DimmerLink board for flicker-free dimming
-- **Brightness levels**: 0%, 25%, 50%, 75%, 100% (cycled via touch)
-- **Home Assistant integration** with API and web server
-- **Over-the-air (OTA) updates**
-- **Fallback WiFi hotspot** for network recovery
+- Touch pad cycles through custom brightness levels (e.g., 0%, 30%, 50%, 100%)
+- Flicker-free dimming via DimmerLink UART board
+- Home Assistant integration: lamp appears as a standard light entity
+- Customizable brightness steps and cycling logic
+- State synchronization between touch, Home Assistant, and automations
+- OTA updates and fallback WiFi hotspot
+- Debug logging for troubleshooting
+- Restart button for ESP32 maintenance
+- **Note:** After firmware upgrades, power-cycle both ESP32 and DimmerLink for reliable operation
 
 ## Hardware Connections
 
 ### ESP32 to DimmerLink Board (UART)
 
-| ESP32 Pin | DimmerLink Pin | Signal | Purpose |
-|-----------|----------------|--------|---------|
-| GPIO17    | RX             | TX     | Data transmission to DimmerLink |
-| GPIO16    | TX             | RX     | Data reception from DimmerLink |
-| GND       | GND            | Ground | Common ground |
-| 3.3V      | VCC            | Power  | 3.3V supply (if powered by ESP32) |
-
-**Note:** Pin assignments (GPIO17/GPIO16) can be adjusted in the UART configuration if you prefer different pins.
-
-### ESP32 Touch Pad
-
-| ESP32 Pin | Component | Purpose |
-|-----------|-----------|---------|
-| GPIO13    | Touch Pad | Capacitive touch input for brightness control |
-| GND       | Reference | Ground reference for touch sensing |
+| ESP32 Pin | DimmerLink Pin | Purpose |
+|-----------|---------------|---------|
+| GPIO17    | RX            | UART TX to DimmerLink |
+| GPIO16    | TX            | UART RX from DimmerLink |
+| GPIO13    | Touch Pad     | User input |
+| GND       | GND           | Common ground |
+| 3.3V/5V   | VCC           | Power |
 
 ### DimmerLink to AC Dimmer Module
 
-The DimmerLink board connects to your AC dimmer module (TRIAC-based) with these signals:
-- **Gate control** - Triggers the TRIAC for phase angle control
-- **Zero-cross detection** - Synchronizes with the AC mains frequency
-- **AC Load** - The AC power being dimmed (typically a lamp)
+- Gate control: triggers TRIAC for phase angle control
+- Zero-cross detection: synchronizes with AC mains
+- AC Load: lamp or other AC device
 
-Refer to the DimmerLink hardware documentation for specific wiring to your dimmer module.
+## ESPHome Configuration Highlights
 
-## Configuration Breakdown
+- Touch sensor lambda cycles through a custom list of brightness values, always starting from the closest current value (and treating off as 0%).
+- Number entity triggers light brightness changes; all state logic flows through the light entity for Home Assistant compatibility.
+- Light entity: monochromatic, synchronized with number entity and touch input.
+- Output block: sends UART commands to DimmerLink based on light brightness.
+- Logging: debug logs for brightness changes and UART communication.
+- Restart button: for ESP32 maintenance.
 
-### 1. UART Interface
+## Example YAML Snippet
 
 ```yaml
-uart:
-  - id: dimmerlink_uart
-    tx_pin: GPIO17
-    rx_pin: GPIO16
-    baud_rate: 115200
-    data_bits: 8
-    stop_bits: 1
-    parity: NONE
+binary_sensor:
+  - platform: esp32_touch
+    name: "Touch Pad Pin 13"
+    pin: GPIO13
+    threshold: 700
+    on_click:
+      - min_length: 10ms
+        max_length: 500ms
+        then:
+          - lambda: |-
+              static const std::vector<int> levels = {0, 30, 50, 100};
+              int current = 0;
+              if (id(dimmer).current_values.is_on()) {
+                current = (int)(id(dimmer).current_values.get_brightness() * 100.0f);
+              } else {
+                current = 0;
+              }
+              int closest_idx = 0;
+              int min_diff = abs(current - levels[0]);
+              for (size_t i = 1; i < levels.size(); ++i) {
+                int diff = abs(current - levels[i]);
+                if (diff < min_diff) {
+                  min_diff = diff;
+                  closest_idx = i;
+                }
+              }
+              int next_idx = (closest_idx + 1) % levels.size();
+              int next = levels[next_idx];
+              auto call = id(dimmer_control).make_call();
+              call.set_value(next);
+              call.perform();
+
+number:
+  - platform: template
+    id: dimmer_control
+    min_value: 0
+    max_value: 100
+    step: 1
+    internal: true
+    set_action:
+      then:
+        - light.turn_on:
+            id: dimmer
+            brightness: !lambda 'return (float)x / 100.0f;'
+
+light:
+  - platform: monochromatic
+    id: dimmer
+    name: "Smart Lamp"
+    output: dimmerlink_output
+
+output:
+  - platform: template
+    id: dimmerlink_output
+    type: float
+    write_action:
+      then:
+        - uart.write:
+            id: dimmerlink_uart
+            data: !lambda |-
+              uint8_t brightness = (uint8_t)(state * 100.0);
+              return {0x02, 0x53, 0x00, brightness};
 ```
 
-- **Baud rate**: 115200 (standard for DimmerLink)
+## Home Assistant Integration
+
+- Lamp appears as a standard light entity with custom brightness steps
+- Touch pad acts as a physical interface for cycling brightness
+- All state changes (touch, Home Assistant, automations) are synchronized
+- Restart button for device maintenance
+
+## Customization
+
+- Adjust brightness levels in the touch sensor lambda (e.g., `{0, 30, 50, 100}`)
+- Change touch threshold for sensitivity
+- Modify UART pins if needed
+- Add more dimmers by duplicating number/light/output blocks with new IDs
+
+## Troubleshooting
+
+- **Power-cycle after upgrades**: Both ESP32 and DimmerLink may require a restart
+- **Touch not responsive**: Adjust threshold or check wiring
+- **No dimming response**: Verify UART wiring, baud rate, and DimmerLink power
+- **Debug logs**: Use logger output for troubleshooting
+
+## Credits & Links
+
+- DimmerLink board: [RBDimmer.com](https://www.rbdimmer.com/shop/dimmerlink-controller-uart-i2c-interface-for-ac-dimmers-48)
+- ESPHome: [esphome.io](https://esphome.io/)
+- Home Assistant: [home-assistant.io](https://www.home-assistant.io/)
 - **8N1 format**: 8 data bits, no parity, 1 stop bit
 - **Pins**: Adjust GPIO17/GPIO16 if using different UART pins on your ESP32
 

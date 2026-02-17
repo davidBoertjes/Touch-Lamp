@@ -1,63 +1,152 @@
-# Smart Touch Lamp Project
+# Smart Touch Lamp with ESPHome & DimmerLink UART
 
-A Home Assistant-integrated smart lamp control system using ESP32 microcontroller with touch-based brightness control and UART-based dimmer module communication.
+## Overview
 
-## Project Overview
+This project implements a flicker-free, touch-controlled AC lamp dimmer using ESPHome on an ESP32 microcontroller and a DimmerLink UART board. The system integrates seamlessly with Home Assistant, providing robust remote and physical control, custom brightness cycling, and reliable state synchronization.
 
-This project provides two configurations for controlling an AC lamp dimmer:
+## Features
 
-1. **Original Configuration (`touch_lamp.yaml`)** - Direct AC dimmer control using ESP32 library
-2. **New Configuration (`touch_lamp_dimmerlink.yaml`)** - DimmerLink UART board for flicker-free control
+- Capacitive touch pad cycles through custom brightness levels (e.g., 0%, 30%, 50%, 100%)
+- Flicker-free dimming via DimmerLink UART board
+- Home Assistant integration: lamp appears as a standard light entity
+- Customizable brightness steps and cycling logic
+- State synchronization between physical touch and Home Assistant
+- OTA updates and fallback WiFi hotspot
+- Debug logging for troubleshooting
+- Restart button for ESP32 maintenance
+- **Note:** After firmware upgrades, power-cycle both ESP32 and DimmerLink for reliable operation
 
-The smart lamp features capacitive touch pad control for brightness adjustment and integrates seamlessly with Home Assistant for remote control and automation.
+## Hardware Requirements
+
+- **ESP32**: DoIt DevKit v1 or ESP32-S3 DevKit C-1
+- **DimmerLink UART Board**: Dedicated MCU for AC dimmer control
+- **Touch Sensor**: Capacitive touch pad (GPIO13)
+- **AC Dimmer Module**: TRIAC-based, controlled by DimmerLink
+- **Power Supply**: ESP32 (5V/1A USB or 3.3V), DimmerLink (3.3V-5V), AC dimmer (110/230V)
+
+### Wiring Summary
+
+| ESP32 Pin | DimmerLink Pin | Purpose |
+|-----------|---------------|---------|
+| GPIO17    | RX            | UART TX to DimmerLink |
+| GPIO16    | TX            | UART RX from DimmerLink |
+| GPIO13    | Touch Pad     | User input |
+| GND       | GND           | Common ground |
+| 3.3V/5V   | VCC           | Power |
 
 ## Project Structure
 
 ```
 Touch Lamp/
-├── README.md                           # This file - project overview
-├── touch_lamp.yaml                     # Original configuration (direct AC dimmer)
-├── touch_lamp_description.md           # Original config documentation
-├── touch_lamp_dimmerlink.yaml          # New configuration (DimmerLink UART)
-├── touch_lamp_dimmerlink_README.md     # DimmerLink config documentation
+├── README.md                         # This file
+├── touch_lamp.yaml                   # Original config (direct AC dimmer)
+├── touch_lamp_description.md         # Original config docs
+├── touch_lamp_dimmerlink.yaml        # ESPHome config for DimmerLink UART
+├── touch_lamp_dimmerlink_README.md   # DimmerLink config docs
 ```
 
-## Hardware Requirements
+## ESPHome Configuration Highlights
 
-### Core Components
+- **Touch Sensor**: Cycles through a custom list of brightness values, always starting from the closest current value (and treating off as 0%).
+- **Number Entity**: Triggers light brightness changes; all state logic flows through the light entity for Home Assistant compatibility.
+- **Light Entity**: Monochromatic light, synchronized with number entity and touch input.
+- **Output Block**: Sends UART commands to DimmerLink based on light brightness.
+- **Logging**: Debug logs for brightness changes and UART communication.
+- **Restart Button**: For ESP32 maintenance.
 
-- **Microcontroller**: ESP32 DoIt DevKit v1 (or ESP32-S3 DevKit C-1)
-- **WiFi/Networking**: Built-in ESP32 WiFi module
-- **AC Dimmer Control**: 
-  - Option A: Direct TRIAC dimmer with zero-cross detection
-  - Option B: DimmerLink UART board (recommended)
-- **Touch Sensor**: Capacitive touch pad on GPIO13
-- **Power Supply**: 
-  - ESP32: 5V/1A USB or 3.3V regulated supply
-  - AC Dimmer: 230V/110V AC mains
+## Home Assistant Integration
 
-### DimmerLink Board (Recommended)
+- Lamp appears as a standard light entity with custom brightness steps
+- Touch pad acts as a physical interface for cycling brightness
+- All state changes (touch, Home Assistant, automations) are synchronized
+- Restart button for device maintenance
 
-The DimmerLink is a dedicated microcontroller board that handles all AC dimmer timing:
+## Customization
 
-- **Interface**: UART (115200 baud, 8N1)
-- **Power**: 3.3V-5V compatible
-- **Features**:
-  - Flicker-free dimming (dedicated Cortex-M+ MCU)
-  - Zero-cross detection (50/60Hz auto-detect)
-  - 0-100% brightness control
-  - Multiple dimming curves (Linear, RMS, Logarithmic)
-  - Works with any AC dimmer TRIAC module
+- Adjust brightness levels in the touch sensor lambda (e.g., `{0, 30, 50, 100}`)
+- Change touch threshold for sensitivity
+- Modify UART pins if needed
+- Add more dimmers by duplicating number/light/output blocks with new IDs
 
-**Purchase links:**
-- [DimmerLink on RBDimmer.com](https://www.rbdimmer.com/shop/dimmerlink-controller-uart-i2c-interface-for-ac-dimmers-48)
-- [DimmerLink on AliExpress](https://fr.aliexpress.com/item/1005011583805008.html)
+## Troubleshooting
 
-## Configuration Comparison
+- **Power-cycle after upgrades**: Both ESP32 and DimmerLink may require a restart
+- **Touch not responsive**: Adjust threshold or check wiring
+- **No dimming response**: Verify UART wiring, baud rate, and DimmerLink power
+- **Debug logs**: Use logger output for troubleshooting
 
-| Feature | `touch_lamp.yaml` | `touch_lamp_dimmerlink.yaml` |
-|---------|-------------------|------------------------------|
-| Dimmer Control | Direct ESP32 library | UART to DimmerLink board |
+## Example YAML Snippet
+
+```yaml
+binary_sensor:
+  - platform: esp32_touch
+    name: "Touch Pad Pin 13"
+    pin: GPIO13
+    threshold: 700
+    on_click:
+      - min_length: 10ms
+        max_length: 500ms
+        then:
+          - lambda: |-
+              static const std::vector<int> levels = {0, 30, 50, 100};
+              int current = 0;
+              if (id(dimmer).current_values.is_on()) {
+                current = (int)(id(dimmer).current_values.get_brightness() * 100.0f);
+              } else {
+                current = 0;
+              }
+              int closest_idx = 0;
+              int min_diff = abs(current - levels[0]);
+              for (size_t i = 1; i < levels.size(); ++i) {
+                int diff = abs(current - levels[i]);
+                if (diff < min_diff) {
+                  min_diff = diff;
+                  closest_idx = i;
+                }
+              }
+              int next_idx = (closest_idx + 1) % levels.size();
+              int next = levels[next_idx];
+              auto call = id(dimmer_control).make_call();
+              call.set_value(next);
+              call.perform();
+
+number:
+  - platform: template
+    id: dimmer_control
+    min_value: 0
+    max_value: 100
+    step: 1
+    internal: true
+    set_action:
+      then:
+        - light.turn_on:
+            id: dimmer
+            brightness: !lambda 'return (float)x / 100.0f;'
+
+light:
+  - platform: monochromatic
+    id: dimmer
+    name: "Smart Lamp"
+    output: dimmerlink_output
+
+output:
+  - platform: template
+    id: dimmerlink_output
+    type: float
+    write_action:
+      then:
+        - uart.write:
+            id: dimmerlink_uart
+            data: !lambda |-
+              uint8_t brightness = (uint8_t)(state * 100.0);
+              return {0x02, 0x53, 0x00, brightness};
+```
+
+## Credits & Links
+
+- DimmerLink board: [RBDimmer.com](https://www.rbdimmer.com/shop/dimmerlink-controller-uart-i2c-interface-for-ac-dimmers-48)
+- ESPHome: [esphome.io](https://esphome.io/)
+- Home Assistant: [home-assistant.io](https://www.home-assistant.io/)
 | Flicker Risk | May flicker under load | Flicker-free (dedicated MCU) |
 | Complexity | Requires ac_dimmer library | Simple 4-byte UART commands |
 | Multi-dimmer | Single dimmer per board | Multiple dimmers on same bus |

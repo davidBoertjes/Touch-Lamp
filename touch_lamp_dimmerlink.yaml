@@ -1,5 +1,7 @@
 esphome:
-  name: "smart-touch-1-dimmerlink"
+  # NOTE: After firmware upgrades, it may be necessary to power-cycle both the ESP32 and DimmerLink 
+  # board to ensure proper operation.
+  name: "smart-touch-1"
   friendly_name: Smart Touch Lamp 1
   compile_process_limit: 1
 
@@ -75,11 +77,33 @@ binary_sensor:
     on_click:
     - min_length: 10ms
       max_length: 500ms
-      # Short touch to cycle through brightnesses
+      # Short touch to cycle through custom brightness levels
       then:
-        - number.increment:
-            id: dimmer_control
-            cycle: true
+          - lambda: |-
+              static const std::vector<int> levels = {0, 30, 50, 100};
+              // Get current brightness and on/off state from the light entity
+              int current = 0;
+              if (id(dimmer).current_values.is_on()) {
+                current = (int)(id(dimmer).current_values.get_brightness() * 100.0f);
+              } else {
+                current = 0;
+              }
+              // Find the index of the closest value
+              int closest_idx = 0;
+              int min_diff = abs(current - levels[0]);
+              for (size_t i = 1; i < levels.size(); ++i) {
+                int diff = abs(current - levels[i]);
+                if (diff < min_diff) {
+                  min_diff = diff;
+                  closest_idx = i;
+                }
+              }
+              // Move to the next value in the list, wrapping around if needed
+              int next_idx = (closest_idx + 1) % levels.size();
+              int next = levels[next_idx];
+              auto call = id(dimmer_control).make_call();
+              call.set_value(next);
+              call.perform();
 
 number:
   - platform: template
@@ -127,4 +151,3 @@ output:
             data: !lambda |-
               uint8_t brightness = (uint8_t)(state * 100.0);
               return {0x02, 0x53, 0x00, brightness};
-
