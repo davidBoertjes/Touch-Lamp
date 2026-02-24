@@ -6,13 +6,10 @@ This project implements a flicker-free, touch-controlled AC lamp dimmer using ES
 
 ## Features
 
-- Capacitive touch pad cycles through custom brightness levels (e.g., 0%, 30%, 50%, 100%)
+- Capacitive touch pad cycles through customizable brightness levels (e.g., 0%, 30%, 50%, 100%)
 - Flicker-free dimming via DimmerLink UART board
 - Home Assistant integration: lamp appears as a standard light entity
-- Customizable brightness steps and cycling logic
 - State synchronization between physical touch and Home Assistant
-- OTA updates and fallback WiFi hotspot
-- Debug logging for troubleshooting
 - Restart button for ESP32 maintenance
 - **Note:** After firmware upgrades, power-cycle both ESP32 and DimmerLink for reliable operation
 
@@ -23,7 +20,7 @@ This project implements a flicker-free, touch-controlled AC lamp dimmer using ES
 - **AC Dimmer Module**: TRIAC-based, controlled by DimmerLink *or*
 - **Combination board**: Containing the DimmerLink and AC Dimmer
 - **Touch Sensor**: Capacitive touch pad (GPIO13) usually the frame of the lamp
-- **Power Supply**: ESP32 (5V/1A USB or 3.3V), DimmerLink (3.3V-5V), AC dimmer (110/230V)
+- **Power Supply**: ESP32 (5V/1A USB or 3.3V), DimmerLink (5V or 3.3V), AC dimmer (110/230V)
 
 ### Wiring Summary
 
@@ -43,7 +40,7 @@ Touch Lamp/
 ├── touch_lamp.yaml                   # Original config (direct AC dimmer)
 ├── touch_lamp_description.md         # Original config docs
 ├── touch_lamp_dimmerlink.yaml        # ESPHome config for DimmerLink UART
-├── touch_lamp_dimmerlink_README.md   # DimmerLink config docs
+└── touch_lamp_dimmerlink_README.md   # DimmerLink config docs
 ```
 
 ## ESPHome Configuration Highlights
@@ -60,87 +57,6 @@ Touch Lamp/
 - Lamp appears as a standard light entity
 - Touch pad acts as a physical interface for cycling brightness with custom brightness steps
 - All state changes (touch, Home Assistant, automations) are synchronized
-- Restart button for device maintenance
-
-## Customization
-
-- Adjust brightness levels in the touch sensor lambda (e.g., `{0, 30, 50, 100}`)
-- Change touch threshold for sensitivity
-- Modify UART pins if needed
-
-## Troubleshooting
-
-- **Power-cycle after upgrades**: Both ESP32 and DimmerLink may require a restart
-- **Touch not responsive**: Adjust threshold or check wiring
-- **No dimming response**: Verify UART wiring, baud rate, and DimmerLink power
-- **Debug logs**: Use logger output for troubleshooting
-
-## Example YAML Snippet
-
-```yaml
-binary_sensor:
-  - platform: esp32_touch
-    name: "Touch Pad Pin 13"
-    pin: GPIO13
-    threshold: 700
-    on_click:
-      - min_length: 10ms
-        max_length: 500ms
-        then:
-          - lambda: |-
-              static const std::vector<int> levels = {0, 30, 50, 100};
-              int current = 0;
-              if (id(dimmer).current_values.is_on()) {
-                current = (int)(id(dimmer).current_values.get_brightness() * 100.0f);
-              } else {
-                current = 0;
-              }
-              int closest_idx = 0;
-              int min_diff = abs(current - levels[0]);
-              for (size_t i = 1; i < levels.size(); ++i) {
-                int diff = abs(current - levels[i]);
-                if (diff < min_diff) {
-                  min_diff = diff;
-                  closest_idx = i;
-                }
-              }
-              int next_idx = (closest_idx + 1) % levels.size();
-              int next = levels[next_idx];
-              auto call = id(dimmer_control).make_call();
-              call.set_value(next);
-              call.perform();
-
-number:
-  - platform: template
-    id: dimmer_control
-    min_value: 0
-    max_value: 100
-    step: 1
-    internal: true
-    set_action:
-      then:
-        - light.turn_on:
-            id: dimmer
-            brightness: !lambda 'return (float)x / 100.0f;'
-
-light:
-  - platform: monochromatic
-    id: dimmer
-    name: "Smart Lamp"
-    output: dimmerlink_output
-
-output:
-  - platform: template
-    id: dimmerlink_output
-    type: float
-    write_action:
-      then:
-        - uart.write:
-            id: dimmerlink_uart
-            data: !lambda |-
-              uint8_t brightness = (uint8_t)(state * 100.0);
-              return {0x02, 0x53, 0x00, brightness};
-```
 
 ## Credits & Links
 
@@ -156,80 +72,6 @@ output:
 - Ensure you have [ESPHome](https://esphome.io) installed
 - Have Home Assistant running and accessible
 - Create a `secrets.yaml` file with your WiFi credentials
-
-### 2. Configuration Selection
-
-**Choose ONE configuration:**
-
-```bash
-# For direct AC dimmer control (simpler, but may flicker)
-cp touch_lamp.yaml esphome_config.yaml
-
-# OR for DimmerLink board (recommended for best results)
-cp touch_lamp_dimmerlink.yaml esphome_config.yaml
-```
-
-### 3. Edit Configuration
-
-Update the following in your chosen YAML file:
-
-```yaml
-esphome:
-  name: "smart-touch-1"  # Change if using multiple devices
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-```
-
-### 4. Create Secrets File
-
-Create `secrets.yaml` in your ESPHome directory:
-
-```yaml
-wifi_ssid: "Your WiFi Network"
-wifi_password: "Your WiFi Password"
-api_key: "Your 32-byte base64-encoded encryption key"
-ota_password: "Your OTA update password"
-```
-
-Generate an API key:
-```bash
-python3 -c "import secrets; print(secrets.token_urlsafe(32))"
-```
-
-### 5. Flash to ESP32
-
-```bash
-esphome run esphome_config.yaml
-```
-
-### 6. Home Assistant Integration
-
-1. In Home Assistant, go to **Settings > Devices & Services > ESPHome**
-2. Add the device IP address
-3. Complete the pairing process
-4. New entities will appear in Home Assistant
-
-
-
-## Features
-
-### Touch Control
-- **Single touch**: Cycles through brightness levels
-- **Debouncing**: 10ms on/off filters prevent accidental triggering
-- **Threshold**: Configurable per hardware (see Calibration section above)
-
-### Home Assistant Integration
-- **Light Entity**: `light.smart_lamp` - Full brightness control via slider
-- **Web Interface**: IP:80 - Direct web control
-- **OTA Updates**: Update firmware without physical access
-
-### WiFi Features
-- **Primary Network**: Auto-connect to configured WiFi
-- **Fallback Hotspot**: "FR-Lamp-Touch" SSID if WiFi unavailable
-- **Captive Portal**: Easy network reconfiguration
-- **API Encryption**: Secure communication with Home Assistant
 
 ## Usage Examples
 
@@ -249,20 +91,19 @@ light.turn_on
 2. Adjust brightness slider
 3. Changes apply immediately
 
-### Via MQTT (if enabled)
-```bash
-mosquitto_pub -t home/smart-touch-1/light/smart_lamp/command -m '{"brightness": 100}'
-```
-
 ## Customization
+
+### Customizable Brightness Levels
+
+Adjust brightness levels in the touch sensor lambda (e.g., `{0, 30, 50, 100}`)
 
 ### Adjust Touch Sensitivity
 Edit touch threshold (higher = less sensitive). Note: ESP32-S3 boards report much larger
 raw touch values than classic ESP32 (S1/S0). For `esp32doit-devkit-v1` (S1) start near `2000`.
 
-To inspect raw touch values manually, set `setup_mode: true` under `esp32_touch:` and
-flash the device. Then observe the raw sensor readings in the web UI or `logger` output.
-Remember to set the logging level to debug during this process.
+To inspect raw touch values manually, set `setup_mode: true` under `esp32_touch:`, 
+`level: debug` under `logger:` and flash the device. Then observe the raw sensor readings
+in the web UI or `logger` output.
 
 Steps to measure and compute a good threshold:
 
@@ -275,6 +116,9 @@ Steps to measure and compute a good threshold:
 Example YAML to enable raw values while testing:
 
 ```yaml
+logger:
+  level: debug
+
 esp32_touch:
   setup_mode: true
 
@@ -290,36 +134,10 @@ configuration, then reflash the device.
 
 ## Troubleshooting
 
-### WiFi Connection Issues
-- Verify SSID and password in `secrets.yaml`
-- Check ESP32 antenna connection
-- Try connecting to fallback hotspot "FR-Lamp-Touch"
-- Restart device with restart button
-
-### Touch Pad Not Responding
-- Verify GPIO13 is not damaged
-- Lower threshold value for increased sensitivity
-- Ensure good contact with touch pad surface
-- Add 100nF capacitor near touch pad if noisy
-
-### DimmerLink UART Issues
-- Verify TX/RX pins match your wiring
-- Confirm DimmerLink is powered
-- Check baud rate is 115200
-- Ensure common GND connection
-- Test with serial terminal: `picocom /dev/ttyUSB0 -b 115200`
-
-### No Dimming Response
-- Check dimmer TRIAC module is powered
-- Verify zero-cross pin connection (if using direct control)
-- Test with 100% brightness first
-- Check Home Assistant entity state
-
-### Home Assistant Not Finding Device
-- Ensure Home Assistant can reach device IP
-- Check API encryption key matches in `secrets.yaml`
-- Restart Home Assistant after device connects
-- Check ESPHome logs: `esphome logs esphome_config.yaml`
+- **Power-cycle after upgrades**: Both ESP32 and DimmerLink may require a restart
+- **Touch not responsive**: Adjust threshold or check wiring
+- **No dimming response**: Verify UART wiring, baud rate, and DimmerLink power
+- **Debug logs**: Use logger output for troubleshooting
 
 ## Documentation
 
@@ -371,27 +189,6 @@ configuration, then reflash the device.
 | WiFi Connection Time | 5-15 seconds |
 | Memory Usage | ~65% of ESP32 SRAM |
 
-## Security Considerations
-
-- **API Encryption**: All Home Assistant communication is encrypted
-- **OTA Password**: Firmware updates require authentication
-- **WiFi**: Uses WPA2 security (configured via secrets)
-- **Default Settings**: 
-  - Web server on port 80 (no authentication)
-  - Consider disabling if on untrusted network
-  - Use firewall rules to restrict access
-
-## Known Limitations
-
-1. **Touch Pad Environmental Sensitivity**
-   - Moisture/humidity can affect sensitivity
-   - May require threshold adjustment
-   - Works best with dry finger contact
-
-2. **UART Communication (DimmerLink)**
-   - No built-in error checking
-   - Commands are fire-and-forget
-
 ## Future Enhancements
 
 - [ ] Advanced dimming curves configuration
@@ -420,12 +217,6 @@ This project is provided as-is for personal use. Modify and distribute as needed
 - [ESPHome Discord](https://discord.gg/KhAMQ2pxN5)
 - [Home Assistant Community Forums](https://community.home-assistant.io)
 - [Home Assistant Discord](https://discord.gg/home-assistant)
-
-### Troubleshooting
-- Check [ESPHome Logs](#troubleshooting)
-- Verify hardware connections match documentation
-- Test with simple UART commands
-- Search existing issues in this repository
 
 ## Changelog
 
