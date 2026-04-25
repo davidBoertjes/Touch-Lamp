@@ -3,18 +3,18 @@ esphome:
   # board to ensure proper operation.
   name: "smart-touch-1"
   friendly_name: Smart Touch Lamp 1
-  compile_process_limit: 1
+  compile_process_limit: 2
 
 esp32:
   board: esp32doit-devkit-v1
   # board: esp32-s3-devkitc-1
   framework:
-    type: arduino
+    type: esp-idf
 
 # Enable logging
 logger:
-  level: info
-#  level: debug # use this when using setup_mode for esp32_touch
+  level: INFO
+#  level: DEBUG # use this when using setup_mode for esp32_touch
 
 # Enable Home Assistant API
 api:
@@ -108,7 +108,6 @@ binary_sensor:
 
 number:
   - platform: template
-    # name: Dimmer Control
     id: dimmer_control
     min_value: 0
     max_value: 100
