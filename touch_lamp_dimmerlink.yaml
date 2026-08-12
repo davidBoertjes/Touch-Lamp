@@ -81,7 +81,7 @@ binary_sensor:
       # Short touch to cycle through custom brightness levels
       then:
           - lambda: |-
-              static const std::vector<int> levels = {0, 30, 50, 100};
+              static const std::array<int, 4> levels = {0, 30, 50, 100};
               // Get current brightness and on/off state from the light entity
               int current = 0;
               if (id(dimmer).current_values.is_on()) {
@@ -105,6 +105,11 @@ binary_sensor:
               auto call = id(dimmer_control).make_call();
               call.set_value(next);
               call.perform();
+
+sensor:
+  - platform: internal_temperature
+    name: "Processor Temperature"
+    update_interval: 60s
 
 number:
   - platform: template
