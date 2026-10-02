@@ -1,3 +1,6 @@
+# Board: ESP32 DevKit V1 (Espressif)
+# Definition: definitions/boards/esp32-devkit-v1/manifest.yaml
+
 esphome:
   # NOTE: After firmware upgrades, it may be necessary to power-cycle both the ESP32 and DimmerLink 
   # board to ensure proper operation.
@@ -6,8 +9,8 @@ esphome:
   compile_process_limit: 2
 
 esp32:
-  board: esp32doit-devkit-v1
-  # board: esp32-s3-devkitc-1
+  variant: esp32
+  flash_size: 4MB
   framework:
     type: esp-idf
 
@@ -20,6 +23,8 @@ logger:
 api:
   encryption:
     key: !secret api_key
+  # Disable automatic reboot to prevent cascade failures during roaming
+  reboot_timeout: 0s # Stops the ESP from rebooting when API is disconnected
 
 ota:
   - platform: esphome
@@ -28,7 +33,14 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-  power_save_mode: none
+  # Crucial fixes for API keep-alive stability:
+  power_save_mode: NONE    # Prevents the Wi-Fi chip from sleeping and missing pings
+  fast_connect: true       # Connects to the AP instantly without scanning all channels
+  passive_scan: true       # Disable WiFi scanning when connected (critical for mesh stability)
+  # Force 2.4GHz for better mesh roaming compatibility
+  # (mesh systems often have issues with clients switching between bands)
+  # Uncomment next line if your router supports ssid for 2.4GHz only:
+  # ssid: !secret wifi_ssid_2ghz
 
   # manual_ip:
   #   static_ip: xxx.xxx.xxx.xxx
@@ -123,9 +135,15 @@ number:
       then:
         - lambda: |-
             ESP_LOGI("DimmerControl:set_action", "Setting light 'dimmer' brightness to %.2f", (float)x / 100.0f);
-        - light.turn_on:
-            id: dimmer
-            brightness: !lambda 'return (float)x / 100.0f;'
+        - if:
+            condition:
+              lambda: 'return x <= 0.0f;'
+            then:
+              - light.turn_off: dimmer
+            else:
+              - light.turn_on:
+                  id: dimmer
+                  brightness: !lambda 'return (float)x / 100.0f;'
 
 # restart-button
 button:
